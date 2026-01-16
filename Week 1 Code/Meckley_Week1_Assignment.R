@@ -50,7 +50,7 @@ p
 colnames(p) <- colnames(df)
 df.r <- rbind(df, p)
 p
-row.names(df.r) <- c(row.names(df[1:15]), 'p')
+row.names(df.r) <- c(row.names(df[1:16]), 'p')
 df.r
 
 # Export the data frame as a .csv file [2 points]
