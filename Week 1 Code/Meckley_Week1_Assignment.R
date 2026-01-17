@@ -20,10 +20,10 @@ LM_wd("meckleylg")
 
 
 # Create 3 numeric vectors and 2 character vectors that are each 15 values in length with the following structures: [10 points; 2 each]
-  # One character vector with all unique values (is it okay if they are just letters? or should it be something else)
-a <- c('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o')
+  # One character vector with all unique values
+a <- c('Cats','Dogs','Fish','Rabbits','Birds','Hamsters','Guinea Pigs','Snakes','Rats','Mice','Horses','Cows','Donkeys','Mules','Pigs')
   # One character vector with exactly 3 unique values
-b <- c('a','b','c','c','c','c','c','c','c','c','c','c','c','c','c')
+b <- c('Brown','White','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray')
   # One numeric vector with all unique values
 c <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
   # One numeric vector with some repeated values (number of your choosing)
@@ -36,21 +36,21 @@ data <- cbind(a,b,c,d,e)
 data
 df <- as.data.frame(data)
 df
-colnames(df) <- c("Fur Color", "Type", "Age", "Height", "Weight")
+colnames(df) <- c("Pets", "Color", "Age", "Height", "Weight")
 df
-row.names(df) <- df$`Fur Color`
+row.names(df) <- df$`Pets`
 df
 
 # Remove the character vector with unique values from the data frame.[2 points] (did I do this right?)
 df[,-1]
 
 # Add 1 row with unique numeric values to the data frame.[2 points]
-p <- data.frame('p', 'c', 16,11,17.2)
-p
-colnames(p) <- colnames(df)
-df.r <- rbind(df, p)
-p
-row.names(df.r) <- c(row.names(df[1:16]), 'p')
+Ferrets <- data.frame('Ferrets', 'Gray', 16,11,17.2)
+Ferrets
+colnames(Ferrets) <- colnames(df)
+df.r <- rbind(df, Ferrets)
+Ferrets
+row.names(df.r) <- c(row.names(df[1:15,]), "Ferrets")
 df.r
 
 # Export the data frame as a .csv file [2 points]
