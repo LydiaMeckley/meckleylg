@@ -41,7 +41,7 @@ df
 row.names(df) <- df$`Pets`
 df
 
-# Remove the character vector with unique values from the data frame.[2 points] (did I do this right?)
+# Remove the character vector with unique values from the data frame.[2 points]
 df[,-1]
 
 # Add 1 row with unique numeric values to the data frame.[2 points]
@@ -54,8 +54,12 @@ row.names(df.r) <- c(row.names(df[1:15,]), "Ferrets")
 df.r
 
 # Export the data frame as a .csv file [2 points]
+write.csv(df.r, file = "Meckley_Week1_Assignment.csv")
+read.df <- read.csv('Meckley_Week1_Assignment.csv')
+read.df
 
 # Generate summary statistics of your data frame and copy them as text into your script under a new section heading. [2 points]
+summary(df.r) 
 
 # Push your script and your .csv file to GitHub in a new "Week1" folder you have created in your repository. [3 points]
 
