@@ -23,9 +23,9 @@ Weight <- c(1,2.1,3.5,4,5,6,7.8,8,9.28,10,11.65,12.98,13,14,15.66)
 
 df <- as.data.frame(cbind(Pets,Color,Age,Height,Weight))
 
-df.r$Age <- as.numeric(df.r$Age)
-df.r$Height <- as.numeric(df.r$Height)
-df.r$Weight <- as.numeric(df.r$Weight)
+df$Age <- as.numeric(df$Age)
+df$Height <- as.numeric(df$Height)
+df$Weight <- as.numeric(df$Weight)
 
 Ferrets <- data.frame('Ferrets', 'Gray', 16,11,17.2)
 
@@ -48,7 +48,7 @@ barplot(df.mean$Mean)
 
 barplot(df.mean$Mean, names.arg = df.mean$Color)
 
-  # Add error bars with mean and standard deviation to the plot
+  # Add error bars with mean and standard deviation to the plot (SD SHOWS UP AS "NA" FOR TWO OF THE COLORS???...)
 df.sd <- aggregate(df1$Height ~ df1$Color, FUN = "sd")
 colnames(df.sd) <- c("Color","StanDev")
 df.sd
@@ -59,14 +59,18 @@ arrows(b.plot, df.mean$Mean-df.sd$StanDev,
        b.plot, df.mean$Mean+df.sd$StanDev,angle=90,code=3)
 
   # Change the x and y labels and add a title
+plot(df1$dec.num ~ df1$uniqu.num, xlab = "Color", ylab = "Height", main = "Pets of Different Colors Compared to Height")
+
   # Export the plot as a PDF that is 4 inches wide and 7 inches tall.
 
 # Create a scatter plot between two of your numeric columns. (10 points)
 plot(df1$Weight ~ df1$Height)
 
-  # Change the point shape and color to something NOT used in the example.
-
+  # Change the point shape and color to something NOT used in the example. (WHY DOES IT NEED THE REST OF THE STUFF AND NOT JUST THE PCH=18???)
+plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights and Weights in Pets", pch=18, col = "darkviolet")
   # Change the x and y labels and add a title
+plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights and Weights in Pets")
+
   # Export the plot as a JPEG by using the "Export" button in the plotting pane.
 
 # Upload both plots with the script used to create them to GitHub. (5 points)
