@@ -15,46 +15,57 @@ LM_wd <- function (repo, folder=NULL) {
 LM_wd("meckleylg")
 
 # With the data frame you created last week you will:
-a <- c('Cats','Dogs','Fish','Rabbits','Birds','Hamsters','Guinea Pigs','Snakes','Rats','Mice','Horses','Cows','Donkeys','Mules','Pigs')
-b <- c('Brown','White','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray')
-c <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
-d <- c(1,2,3,3,4,4,5,6,7,8,8,8,8,9,10)
-e <- c(1,2.1,3.5,4,5,6,7.8,8,9.28,10,11.65,12.98,13,14,15.66)
+Pets <- c('Cats','Dogs','Fish','Rabbits','Birds','Hamsters','Guinea Pigs','Snakes','Rats','Mice','Horses','Cows','Donkeys','Mules','Pigs')
+Color <- c('Brown','White','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray','Gray')
+Age <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+Height <- c(1,2,3,3,4,4,5,6,7,8,8,8,8,9,10)
+Weight <- c(1,2.1,3.5,4,5,6,7.8,8,9.28,10,11.65,12.98,13,14,15.66)
 
-data <- cbind(a,b,c,d,e)
-data
-df <- as.data.frame(data)
-df
-colnames(df) <- c("Pets", "Color", "Age", "Height", "Weight")
-df
-row.names(df) <- df$`Pets`
-df
-
-new.df <- df[,-1]
-df[,-1]
-
-Ferrets <- data.frame('Gray', 16,11,17.2)
-Ferrets
-colnames(Ferrets) <- colnames(new.df)
-df.r <- rbind(new.df, Ferrets)
-Ferrets
-row.names(df.r) <- c(row.names(df[1:15,]), "Ferrets")
-df.r
+df <- as.data.frame(cbind(Pets,Color,Age,Height,Weight))
 
 df.r$Age <- as.numeric(df.r$Age)
 df.r$Height <- as.numeric(df.r$Height)
 df.r$Weight <- as.numeric(df.r$Weight)
 
+Ferrets <- data.frame('Ferrets', 'Gray', 16,11,17.2)
+
+colnames(Ferrets) <- colnames(df)
+
+df1 <- rbind(df, Ferrets)
+
+row.names(df1) <- df1$Pets
+df1 <- df1[,-1]
+df1
+
 # Create a barplot for one numeric column, grouped by the character vector with 3 unique values (10 points)
-df.mean <- aggregate(df1$Height ~df1$Color, FUN = "mean")
+df.mean <- aggregate(df1$Height ~ df1$Color, FUN = "mean")
 df.mean
 
+colnames(df.mean) <- c("Color","Mean")
+df.mean
+
+barplot(df.mean$Mean)
+
+barplot(df.mean$Mean, names.arg = df.mean$Color)
+
   # Add error bars with mean and standard deviation to the plot
+df.sd <- aggregate(df1$Height ~ df1$Color, FUN = "sd")
+colnames(df.sd) <- c("Color","StanDev")
+df.sd
+
+b.plot <- barplot(df.mean$Mean, names.arg = df.mean$Color)
+
+arrows(b.plot, df.mean$Mean-df.sd$StanDev,
+       b.plot, df.mean$Mean+df.sd$StanDev,angle=90,code=3)
+
   # Change the x and y labels and add a title
   # Export the plot as a PDF that is 4 inches wide and 7 inches tall.
 
 # Create a scatter plot between two of your numeric columns. (10 points)
+plot(df1$Weight ~ df1$Height)
+
   # Change the point shape and color to something NOT used in the example.
+
   # Change the x and y labels and add a title
   # Export the plot as a JPEG by using the "Export" button in the plotting pane.
 
