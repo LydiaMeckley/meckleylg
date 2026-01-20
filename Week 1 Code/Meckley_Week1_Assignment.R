@@ -46,10 +46,10 @@ new.df <- df[,-1]
 df[,-1]
 
 # Add 1 row with unique numeric values to the data frame.[2 points]
-Ferrets <- data.frame('Ferrets', 'Gray', 16,11,17.2)
+Ferrets <- data.frame('Gray', 16,11,17.2)
 Ferrets
-colnames(Ferrets) <- colnames(df)
-df.r <- rbind(df, Ferrets)
+colnames(Ferrets) <- colnames(new.df)
+df.r <- rbind(new.df, Ferrets)
 Ferrets
 row.names(df.r) <- c(row.names(df[1:15,]), "Ferrets")
 df.r
