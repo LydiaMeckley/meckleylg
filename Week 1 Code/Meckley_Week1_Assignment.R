@@ -60,13 +60,19 @@ read.df <- read.csv('Meckley_Week1_Assignment.csv')
 read.df
 
 # Generate summary statistics of your data frame and copy them as text into your script under a new section heading. [2 points]
+df.r$Age <- as.numeric(df.r$Age)
+df.r$Height <- as.numeric(df.r$Height)
+df.r$Weight <- as.numeric(df.r$Weight)
 summary(df.r) 
 
 # Summary Statistics of Data
-Pets              Color               Age               Height             Weight         
-Length:16          Length:16          Length:16          Length:16          Length:16         
-Class :character   Class :character   Class :character   Class :character   Class :character  
-Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+#Color                Age            Height           Weight      
+#Length:16          Min.   : 1.00   Min.   : 1.000   Min.   : 1.000  
+#Class :character   1st Qu.: 4.75   1st Qu.: 3.750   1st Qu.: 4.750  
+#Mode  :character   Median : 8.50   Median : 6.500   Median : 8.640  
+                   #Mean   : 8.50   Mean   : 6.062   Mean   : 8.823  
+                   #3rd Qu.:12.25   3rd Qu.: 8.000   3rd Qu.:12.985  
+                   #Max.   :16.00   Max.   :11.000   Max.   :17.200 
 
 # Push your script and your .csv file to GitHub in a new "Week1" folder you have created in your repository. [3 points]
 
