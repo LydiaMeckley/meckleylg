@@ -61,6 +61,12 @@ read.df
 # Generate summary statistics of your data frame and copy them as text into your script under a new section heading. [2 points]
 summary(df.r) 
 
+#Summary Statistics of Data
+Pets              Color               Age               Height             Weight         
+Length:16          Length:16          Length:16          Length:16          Length:16         
+Class :character   Class :character   Class :character   Class :character   Class :character  
+Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+
 # Push your script and your .csv file to GitHub in a new "Week1" folder you have created in your repository. [3 points]
 
 
