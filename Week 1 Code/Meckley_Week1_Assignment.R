@@ -42,6 +42,7 @@ row.names(df) <- df$`Pets`
 df
 
 # Remove the character vector with unique values from the data frame.[2 points]
+new.df <- df[,-1]
 df[,-1]
 
 # Add 1 row with unique numeric values to the data frame.[2 points]
@@ -61,7 +62,7 @@ read.df
 # Generate summary statistics of your data frame and copy them as text into your script under a new section heading. [2 points]
 summary(df.r) 
 
-#Summary Statistics of Data
+# Summary Statistics of Data
 Pets              Color               Age               Height             Weight         
 Length:16          Length:16          Length:16          Length:16          Length:16         
 Class :character   Class :character   Class :character   Class :character   Class :character  
