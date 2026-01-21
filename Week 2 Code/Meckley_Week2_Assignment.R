@@ -45,23 +45,25 @@ colnames(df.mean) <- c("Color","Mean")
 df.mean
 
 barplot(df.mean$Mean)
+b.plot <- barplot(df.mean$Mean, names.arg = df.mean$Color, ylim = c(0,10), xlab = "Color", ylab = "Height", main = "Pets of Different Colors Compared to Height")
 
-barplot(df.mean$Mean, names.arg = df.mean$Color)
-
-  # Add error bars with mean and standard deviation to the plot (SD SHOWS UP AS "NA" FOR TWO OF THE COLORS???...)
+  # Add error bars with mean and standard deviation to the plot
 df.sd <- aggregate(df1$Height ~ df1$Color, FUN = "sd")
 colnames(df.sd) <- c("Color","StanDev")
 df.sd
-
-b.plot <- barplot(df.mean$Mean, names.arg = df.mean$Color)
 
 arrows(b.plot, df.mean$Mean-df.sd$StanDev,
        b.plot, df.mean$Mean+df.sd$StanDev,angle=90,code=3)
 
   # Change the x and y labels and add a title
-plot(df1$dec.num ~ df1$uniqu.num, xlab = "Color", ylab = "Height", main = "Pets of Different Colors Compared to Height")
+#in the code above
 
   # Export the plot as a PDF that is 4 inches wide and 7 inches tall.
+pdf( file = "Week 2 Code/PetsofDifferentColorsComparedtoHeight.pdf", width = 4, height = 7)
+b.plot <- barplot(df.mean$Mean, names.arg = df.mean$Color, ylim = c(0,10), xlab = "Color", ylab = "Height", main = "Pets of Different Colors Compared to Height")
+arrows(b.plot, df.mean$Mean-df.sd$StanDev,
+       b.plot, df.mean$Mean+df.sd$StanDev,angle=90,code=3)
+dev.off()
 
 # Create a scatter plot between two of your numeric columns. (10 points)
 plot(df1$Weight ~ df1$Height)
@@ -69,7 +71,7 @@ plot(df1$Weight ~ df1$Height)
   # Change the point shape and color to something NOT used in the example. (WHY DOES IT NEED THE REST OF THE STUFF AND NOT JUST THE PCH=18???)
 plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights and Weights in Pets", pch=18, col = "darkviolet")
   # Change the x and y labels and add a title
-plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights and Weights in Pets")
+#in the code above
 
   # Export the plot as a JPEG by using the "Export" button in the plotting pane.
 
