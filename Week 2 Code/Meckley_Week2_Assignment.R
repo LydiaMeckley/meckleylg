@@ -68,7 +68,7 @@ dev.off()
 # Create a scatter plot between two of your numeric columns. (10 points)
 plot(df1$Weight ~ df1$Height)
 
-  # Change the point shape and color to something NOT used in the example. (WHY DOES IT NEED THE REST OF THE STUFF AND NOT JUST THE PCH=18???)
+  # Change the point shape and color to something NOT used in the example.
 plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights and Weights in Pets", pch=18, col = "darkviolet")
   # Change the x and y labels and add a title
 #in the code above
@@ -78,3 +78,5 @@ plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights 
 # Upload both plots with the script used to create them to GitHub. (5 points)
   # Follow the same file naming format as last week for the script.
   # Name plots as Lastname_barplot or Lastname_scatterplot. Save them to your "Week2" folder. (5 points)
+
+#CHANGE THE NAMES OF MY PLOTS
