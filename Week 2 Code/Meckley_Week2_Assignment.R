@@ -59,7 +59,7 @@ arrows(b.plot, df.mean$Mean-df.sd$StanDev,
 #in the code above
 
   # Export the plot as a PDF that is 4 inches wide and 7 inches tall.
-pdf( file = "Week 2 Code/PetsofDifferentColorsComparedtoHeight.pdf", width = 4, height = 7)
+pdf( file = "Week 2 Code/Meckley_barplot.pdf", width = 4, height = 7)
 b.plot <- barplot(df.mean$Mean, names.arg = df.mean$Color, ylim = c(0,10), xlab = "Color", ylab = "Height", main = "Pets of Different Colors Compared to Height")
 arrows(b.plot, df.mean$Mean-df.sd$StanDev,
        b.plot, df.mean$Mean+df.sd$StanDev,angle=90,code=3)
@@ -78,5 +78,3 @@ plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights 
 # Upload both plots with the script used to create them to GitHub. (5 points)
   # Follow the same file naming format as last week for the script.
   # Name plots as Lastname_barplot or Lastname_scatterplot. Save them to your "Week2" folder. (5 points)
-
-#CHANGE THE NAMES OF MY PLOTS
