@@ -38,7 +38,7 @@ df <- as.data.frame(data)
 df
 colnames(df) <- c("Pets", "Color", "Age", "Height", "Weight")
 df
-row.names(df) <- df$`Pets`
+row.names(df) <- df$`Pets` #This will also work without the backticks. i.e. df$Pets
 df
 
 # Remove the character vector with unique values from the data frame.[2 points]
@@ -75,5 +75,5 @@ summary(df.r)
                    #Max.   :16.00   Max.   :11.000   Max.   :17.200 
 
 # Push your script and your .csv file to GitHub in a new "Week1" folder you have created in your repository. [3 points]
-
+#Looks good!
 
