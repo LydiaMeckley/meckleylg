@@ -15,11 +15,10 @@ LM_wd <- function (repo, folder=NULL) {
 LM_wd("meckleylg")
 
 # (1) Approximately how many hours ahead of Sunbury was the peak flow in Lewisburg during the 2011 flood? (2 pt)
-  #flow will be slower because lewi is on the west branch of the Sus river 8-9 hours (chart is on the tutorial)
-
+  #The peak flow in Lewisburg during the 2011 flood was about 8-9 hours ahead of Sunbury.
 
 # (2) Give one reason why information on the time between peak flow events up- and downstream could be valuable information? (4 pts)
-#Information on the time between peak flow events up- and downstream could be valuable information to use as a warning. Those who live upstream, who experience the peak flow first, can warn those who are downstream on when the peak flow will come to them so people can prepare and move out of the area before the flood event happens there.
+  #Information on the time between peak flow events up- and downstream could be valuable information to use as a warning. Those who live upstream, who experience the peak flow first, can warn those who are downstream on when the peak flow will come to them so people can prepare and move out of the area before the flood event happens there.
 
 
 # Package scavenger hunt! (12 pts each)
@@ -58,6 +57,7 @@ plot(generations, p_through_time, type="l", lwd = 2, col = "darkorchid3",
 # DO I NEED TO RUN THEIR OTHER STUFFS? ASK!!! THERE ARE A FEW OTHER THINGS BUT DON'T REALLY APPLY TO THE EXAMPLE?!
 
         # Depending on the function, either upload a plot of the result or use print() and copy/paste the console output into your script.
+          # Uploaded plot
     # After running the function example, manipulate a parameter within the function to create a new result.
         # Common options might be allele frequency, population size, fitness level, etc. 
 N <- 60 #population size
@@ -84,6 +84,7 @@ plot(generations, p_through_time, type="l", lwd = 2, col = "darkorchid3",
      ylab = "p", xlab = "generations", las = 1)
 
         # Add the results of this manipulation to your script (if in the console) or upload the new plot.
+          # Uploaded plot
 
           # By manipulating these parameters you can see how it impacts the results.
           # This type of manipulation is one example of how theoretical ecology and modelling are used to predict patterns in nature.
