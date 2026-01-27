@@ -19,7 +19,8 @@ LM_wd("meckleylg")
 
 
 # (2) Give one reason why information on the time between peak flow events up- and downstream could be valuable information? (4 pts)
-# to warn ppl
+#Information on the time between peak flow events up- and downstream could be valuable information to use as a warning. Those who live upstream, who experience the peak flow first, can warn those who are downstream on when the peak flow will come to them so people can prepare and move out of the area before the flood event happens there.
+
 
 # Package scavenger hunt! (12 pts each)
 
