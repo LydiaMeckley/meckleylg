@@ -78,3 +78,5 @@ plot(df1$Weight ~ df1$Height, xlab = "Height", ylab = "Weight", main = "Heights 
 # Upload both plots with the script used to create them to GitHub. (5 points)
   # Follow the same file naming format as last week for the script.
   # Name plots as Lastname_barplot or Lastname_scatterplot. Save them to your "Week2" folder. (5 points)
+
+#Perfect!
