@@ -17,7 +17,8 @@ LM_wd("meckleylg")
 # Look at the plot and model results for our Dryad data in the tutorial. 
   # Part 1: Without knowing which points represent which groups,give one explanation for why these data might be difficult
   # to draw spatial inferences about genes.(4 points)
-    #
+    #the points overlap??? it can be hard to tell exactly how many groups there are and stuffs
+#when i try to install packages, it works but then i cant open them
   # Part 2: Despite the drawbacks, give the result or interpretation that you feel most confident in (4 points), and EXPLAIN WHY (6 points).
     #
 
