@@ -27,6 +27,9 @@ LM_wd("meckleylg")
 install.packages("stability")
 library(stability)
 
+require(devtools)
+install_version("dplyr", version = "1.2.0", repos = "http://cran.us.r-project.org")
+
 # Create two linear models for Yield Response: one related to the Environment and one to the Genotype. (2 points each)
   # 'Yield Response' in this dataset is a measure of phenotype expression.
   # Hint: Look at the help file for this dataset.
