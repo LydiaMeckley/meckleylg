@@ -22,8 +22,6 @@ LM_wd("meckleylg")
   # Part 2: Despite the drawbacks, give the result or interpretation that you feel most confident in (4 points), and EXPLAIN WHY (6 points).
     #
 
-#I CANT OPEN THE DATA SET IN THE TUTORIAL#
-
 
 # For your scripting assignment we will use the "ge_data" data frame found in the "stability" package.
   # Install the "stability" package, load it into your R environment, and use the data() function to load the "ge_data". (2 points)
@@ -41,17 +39,22 @@ devtools::install_version("dplyr", version = "1.1.4", repos = "https://cloud.r-p
   # Hint: Look at the help file for this dataset.
 ge_data
 
-mod.lon <- lm(ge_data$Yield ~ ge_data$Env)
-mod.lat <- lm(ge_data$Yield ~ ge_data$Gen)
+mod.env <- lm(ge_data$Yield ~ ge_data$Env)
+mod.gen <- lm(ge_data$Yield ~ ge_data$Gen)
 
 # Test the significance of both models and look at the model summary. (4 points each)
-anova(mod.lon)
-summary(mod.latlon)
+anova(mod.env)
+summary(mod.env)
 
-anova(mod.lat)
-summary(mod.lat)
+anova(mod.gen)
+summary(mod.gen)
 
   # Which model is a better fit to explain the yield response(2 pts), and WHY? (4 points)
   # Hint: Does one model seem more likely to be over-fitted?
+    #The model that is a better fit to explain yield response is for the genotype. That is because the R-squared value for that model is 0.1183, much smaller and father away from 1 than the yield response model that looks at the environment, which has an R-squared value of 0.4359. The one that looks at environment would be considered over-fitted.
+
+#MULTIPLE OR ADJUSTED R SQUARED?#
+#IS THAT WHAT YOU MEAN FOR WHY?#
 
 # Which environment would be your very WORST choice for generating a strong yield response? (2 points)
+  #The environment that would be the very worst choice for generating a strong yield response is Sargodha.
