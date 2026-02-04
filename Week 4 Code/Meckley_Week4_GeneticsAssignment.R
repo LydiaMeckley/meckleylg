@@ -36,24 +36,20 @@ library(dplyr)
 
 devtools::install_version("dplyr", version = "1.1.4", repos = "https://cloud.r-project.org")
 
-install.packages("poppr")
-library(poppr)
-
-library(haplotypes)
-
 # Create two linear models for Yield Response: one related to the Environment and one to the Genotype. (2 points each)
   # 'Yield Response' in this dataset is a measure of phenotype expression.
   # Hint: Look at the help file for this dataset.
-data(ge_data)
+ge_data
 
-mod.lon <- lm(data$Yield ~ data$Env..huso.30.)
-mod.lon <- lm(data$Yield ~ data$Gen..huso.30.)
-#idk what im doing...#
-?ge_data
+mod.lon <- lm(ge_data$Yield ~ ge_data$Env)
+mod.lat <- lm(ge_data$Yield ~ ge_data$Gen)
 
 # Test the significance of both models and look at the model summary. (4 points each)
 anova(mod.lon)
 summary(mod.latlon)
+
+anova(mod.lat)
+summary(mod.lat)
 
   # Which model is a better fit to explain the yield response(2 pts), and WHY? (4 points)
   # Hint: Does one model seem more likely to be over-fitted?
