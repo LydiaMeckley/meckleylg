@@ -17,10 +17,10 @@ LM_wd("meckleylg")
 # Look at the plot and model results for our Dryad data in the tutorial. 
   # Part 1: Without knowing which points represent which groups,give one explanation for why these data might be difficult
   # to draw spatial inferences about genes.(4 points)
-    #the points overlap??? it can be hard to tell exactly how many groups there are and stuffs
+    #These data might be difficult to draw spatial inferences about genes because the points are very clustered on the chart. Some of the points overlap as well which can make it hard to tell exactly how many groups there are.
 
   # Part 2: Despite the drawbacks, give the result or interpretation that you feel most confident in (4 points), and EXPLAIN WHY (6 points).
-    #
+    #explain what patterns you could possibly see based on the data (literally what do you see)
 
 
 # For your scripting assignment we will use the "ge_data" data frame found in the "stability" package.
@@ -51,10 +51,10 @@ summary(mod.gen)
 
   # Which model is a better fit to explain the yield response(2 pts), and WHY? (4 points)
   # Hint: Does one model seem more likely to be over-fitted?
-    #The model that is a better fit to explain yield response is for the genotype. That is because the R-squared value for that model is 0.1183, much smaller and father away from 1 than the yield response model that looks at the environment, which has an R-squared value of 0.4359. The one that looks at environment would be considered over-fitted.
+    #The model that is a better fit to explain yield response is for the genotype. That is because the R-squared value for that model is 0.07706, much smaller and father away from 1 than the yield response model that looks at the environment, which has an R-squared value of 0.4315. The one that looks at environment would be considered over-fitted.
 
-#MULTIPLE OR ADJUSTED R SQUARED?#
-#IS THAT WHAT YOU MEAN FOR WHY?#
+#wait so enviornment is a better fit? I have the opposite - yes I indeed do have the opposite.
+
 
 # Which environment would be your very WORST choice for generating a strong yield response? (2 points)
   #The environment that would be the very worst choice for generating a strong yield response is Sargodha.
