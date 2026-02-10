@@ -132,7 +132,7 @@ ggsave(filename=paste("/Users/matt/Documents/Dropbox/LifeCycleRevision/Scientifi
                       paste("Figure4", ".png", sep=""), sep=""), plot=myplot,
        width = 10, height = 4, bg = 'transparent')
 
-ggsave(filename=paste("/Users/lydiameckley/GitHub/LifeCycleRevision/ScientificReports/Dryad/",
+ggsave(filename=paste("meckleylg", folder="Week 5 Code",
                       paste("Figure4", ".png", sep=""), sep=""), plot=myplot,
        width = 10, height = 4, bg = 'transparent')
 
