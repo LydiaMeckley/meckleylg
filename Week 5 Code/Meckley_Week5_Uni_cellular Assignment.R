@@ -136,7 +136,7 @@ ggsave(filename=paste("meckleylg", folder="Week 5 Code",
 library(fitdistrplus)
 library(logspline)
 
-  #########
+                      ######### ASSIGNMENT #########
 
 
 # First, recreate Figure 4 from Herron et al. (2019). De novo origins of multicellularity in response to predation. Scientific reports.
@@ -150,7 +150,7 @@ library(logspline)
 
 
 # Do all of the strains in the plot have the same distributions (yes/no)? (1 pt)
-  #All the strains do not have the same distributions. WRONG HELP ME
+  #All the strains do not have the same distributions.???
 
 # Based on these observations of your strain distributions, why did the authors use a Kruskal-Wallis test rather than ANOVA to compare the strains? (3 pts)
   #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data is strains in the plot do not have rge same distributions and there are many outliers, and some stray very far.
@@ -158,28 +158,33 @@ library(logspline)
 
 # Use the fitdist() and gofstat() functions to compare the poisson, negative binomial, and logistic distributions for:
   # (1) - The number of cells of progeny (data$Num.Cells.Progeny)
-fitdist(data$Num.Cells.Progeny)
+data.new <- na.omit(data.new)
+number <- data.new$Num.Cells.Progeny
+fitp <- fitdist(number, "pois")
+gofstat(fitp)
 
-fitdist(list(fit.weibull, fit.gamma, fit.norm, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
+fitnb <- fitdist(number, "nbinom")
+gofstat(fitnb)
 
-one.col <- lim_nolog$Ara_plusProg
+fit.logis <- fitdist(number, "logis")
+gofstat(fit.logis)
 
-fit.norm <- fitdist(data$Num.Cells.Progeny, distr = "norm")
-
-gofstat(data$Num.Cells.Progeny)
-gofstat(list(fit.weibull, fit.gamma, fit.norm, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
+gofstat(list(fitp, fitnb, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
 
   # (2) - The replication time (data$RepTime.sec)
-fitdist(data$RepTime.sec)
-fit.norm <- fitdist(data$RepTime.sec, distr = "norm")
-
-gofstat(list(fit.weibull, fit.gamma, fit.norm, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
-
-gofstat(data$RepTime.sec)
-
     #HINT- "Num.Cells.Progeny" has defined breaks. To display results, use the formula with the "chisqbreaks" argument as follows:
       #gofstat(list(fit.1, fit.2, fit.3, etc), chisqbreaks=c(1,2,4,8,16,32,64))
+number2 <- data.new$freq
+fitp <- fitdist(number2, "pois")
+gofstat(fitp)
 
+fitnb <- fitdist(number2, "nbinom")
+gofstat(fitnb)
+
+fit.logis <- fitdist(number2, "logis")
+gofstat(fit.logis)
+
+gofstat(list(fitp, fitnb, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
 
 # Based on the AIC scores, which distribution is the best fit for: (5 pts each)
   # (1) - The number of cells of progeny (data$Num.Cells.Progeny)?
