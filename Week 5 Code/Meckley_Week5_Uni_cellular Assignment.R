@@ -150,7 +150,7 @@ library(logspline)
 
 
 # Do all of the strains in the plot have the same distributions (yes/no)? (1 pt)
-  #All the strains do not have the same distributions.???
+  #All the strains do not have the same distributions.
 
 # Based on these observations of your strain distributions, why did the authors use a Kruskal-Wallis test rather than ANOVA to compare the strains? (3 pts)
   #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data is strains in the plot do not have rge same distributions and there are many outliers, and some stray very far.
@@ -174,7 +174,9 @@ gofstat(list(fitp, fitnb, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
   # (2) - The replication time (data$RepTime.sec)
     #HINT- "Num.Cells.Progeny" has defined breaks. To display results, use the formula with the "chisqbreaks" argument as follows:
       #gofstat(list(fit.1, fit.2, fit.3, etc), chisqbreaks=c(1,2,4,8,16,32,64))
-number2 <- data.new$freq
+data.new2 <- data$RepTime.sec
+data.new2 <- na.omit(data.new2)
+number2 <- data.new2
 fitp <- fitdist(number2, "pois")
 gofstat(fitp)
 
@@ -188,10 +190,10 @@ gofstat(list(fitp, fitnb, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
 
 # Based on the AIC scores, which distribution is the best fit for: (5 pts each)
   # (1) - The number of cells of progeny (data$Num.Cells.Progeny)?
-    #
+    #The negative binomial distribution is the best fit.
 
   # (2) - The replication time (data$RepTime.sec)?
-    #
+    #The negative binomial distribution is the best fit...??? ASK HELP ME WHAT HUH?
 
 
 # Plot a generic histogram for the replication time (data$RepTime.sec) (4 pt)
@@ -202,6 +204,7 @@ hist(data$RepTime.sec)
   #Give one hypothesis for an evolutionary process represented by the two tallest bars in your histogram. (8 pts)
   # Don't cheat by looking at the paper! 
     # This hypothesis does not need to be correct - it only needs to be ecologically rational based these two figures.
-      #
+      #A mutation could have entered the population, which is beneficial to the population, and is now being maintained by the population, continuing to evolve.
+#... (explain this more to me HELP) what does replication time even mean...
 
 
