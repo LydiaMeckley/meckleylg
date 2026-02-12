@@ -14,7 +14,7 @@ LM_wd <- function (repo, folder=NULL) {
 
 LM_wd("meckleylg")
 
-      #########
+      ######### DATA SET #########
 
 ### Script to  analyze chlamy timelapse data ###
 install.packages("ggplot2")
@@ -153,7 +153,7 @@ library(logspline)
   #All the strains do not have the same distributions.
 
 # Based on these observations of your strain distributions, why did the authors use a Kruskal-Wallis test rather than ANOVA to compare the strains? (3 pts)
-  #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data is strains in the plot do not have the same distributions, they have a non-normal or non-parametric distribution.
+  #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data in the plot do not have the same distributions, they have a non-normal or non-parametric distribution.
 
 # Use the fitdist() and gofstat() functions to compare the poisson, negative binomial, and logistic distributions for:
   # (1) - The number of cells of progeny (data$Num.Cells.Progeny)
@@ -192,7 +192,7 @@ gofstat(list(fitp, fitnb, fit.logis), chisqbreaks=c(1,2,4,8,16,32,64))
     #The negative binomial distribution is the best fit.
 
   # (2) - The replication time (data$RepTime.sec)?
-    #The negative binomial distribution is the best fit...??? ASK HELP ME WHAT HUH?
+    #The negative binomial distribution is the best fit.
 
 
 # Plot a generic histogram for the replication time (data$RepTime.sec) (4 pt)
@@ -203,9 +203,5 @@ hist(data$RepTime.sec)
   #Give one hypothesis for an evolutionary process represented by the two tallest bars in your histogram. (8 pts)
   # Don't cheat by looking at the paper! 
     # This hypothesis does not need to be correct - it only needs to be ecologically rational based these two figures.
-      #A mutation could have entered the population, which is beneficial to the population, and is now being maintained by the population, continuing to evolve.
-#... (explain this more to me HELP) what does replication time even mean...
-#what process leads to the two nomials - could be many things
-#two different strategies with a gradient (sneaker vs satellite males) - how much time it occurs in the population
-#maybe it was seasonality when they sampled
+      #A hypothesis for the two tallest bars in the histogram could possibly represent two different phenotypes, and being expressed more than others over specific time intervals during the life history of the organism, and those two have evolved to be the most prevalent in the population out of all other possible phenotypes.
 
