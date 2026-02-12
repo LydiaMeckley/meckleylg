@@ -153,8 +153,7 @@ library(logspline)
   #All the strains do not have the same distributions.
 
 # Based on these observations of your strain distributions, why did the authors use a Kruskal-Wallis test rather than ANOVA to compare the strains? (3 pts)
-  #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data is strains in the plot do not have rge same distributions and there are many outliers, and some stray very far.
-###RIGHT???# will we talk about this more?
+  #The authors use a Kruskal-Wallis test rather than ANOVA to compare the strains because the data is strains in the plot do not have the same distributions, they have a non-normal or non-parametric distribution.
 
 # Use the fitdist() and gofstat() functions to compare the poisson, negative binomial, and logistic distributions for:
   # (1) - The number of cells of progeny (data$Num.Cells.Progeny)
@@ -206,5 +205,7 @@ hist(data$RepTime.sec)
     # This hypothesis does not need to be correct - it only needs to be ecologically rational based these two figures.
       #A mutation could have entered the population, which is beneficial to the population, and is now being maintained by the population, continuing to evolve.
 #... (explain this more to me HELP) what does replication time even mean...
-
+#what process leads to the two nomials - could be many things
+#two different strategies with a gradient (sneaker vs satellite males) - how much time it occurs in the population
+#maybe it was seasonality when they sampled
 
