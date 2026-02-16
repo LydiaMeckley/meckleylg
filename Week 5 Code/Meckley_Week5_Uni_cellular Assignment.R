@@ -145,10 +145,6 @@ library(logspline)
   # Upload the plot you've created to GitHub. (4 points)
   # Zoom into your plot to look at the distribution for different strains.
 
-
-            ###I CANT ZOOM IN HELP ME HOW DO I DO THIS???###
-
-
 # Do all of the strains in the plot have the same distributions (yes/no)? (1 pt)
   #All the strains do not have the same distributions.
 
