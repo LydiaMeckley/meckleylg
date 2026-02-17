@@ -19,13 +19,22 @@ LM_wd("meckleylg")
 setwd("C:/GitHub/R4Eco_2026/Week6")
 LM_wd(repo="R4Eco_2026", folder="week6")
 
-data <- read.csv("Toscano_Griffen_Data.csv", header=TRUE)
+data <- read.csv("Toscano_Griffen_Data.csv")
+
+library(MASS)
+library(MuMIn)
+library(mgcv)
 
 # First create models with the same (y) and method (GLMM) as the published paper, using the GLMM function from this week's tutorial. 
-  #Create two different models using the same 3 predictor (x) variables from the dataset. (4 points each) 
+  #Create two different models using the same 3 predictor (x) variables from the dataset. (4 points each)
     # In one model only include additive effects.
+
+
     # In the other model include one interactive effect.
+
+
     # Use a binomial distribution and block as a random effect in both models to match the paper's analyses. Remember ?family to find distribution names.
+
 
 # The authors used proportional consumption of prey as the (y) in their model, but did not include this in the dataset.
   # So we are going to create it - run the following line, assuming "df" is your data frame (feel free to change that):
