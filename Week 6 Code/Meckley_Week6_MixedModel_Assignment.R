@@ -21,24 +21,27 @@ LM_wd(repo="R4Eco_2026", folder="week6")
 
 data <- read.csv("Toscano_Griffen_Data.csv")
 
+head(data)
+
 library(MASS)
 library(MuMIn)
 library(mgcv)
 
+?family
+
 # First create models with the same (y) and method (GLMM) as the published paper, using the GLMM function from this week's tutorial. 
   #Create two different models using the same 3 predictor (x) variables from the dataset. (4 points each)
     # In one model only include additive effects.
-
+glmm.mod <- glmmPQL(activity.level~temperature + carapace.width + claw.width, family = binomial, random = ~ 1 | block, data = data)
 
     # In the other model include one interactive effect.
-
+glmn.mod2 <- glmmPQL(activity.level~temperature * carapace.width + claw.width, family = binomial, random = ~ 1 | block, data = data)
 
     # Use a binomial distribution and block as a random effect in both models to match the paper's analyses. Remember ?family to find distribution names.
 
-
 # The authors used proportional consumption of prey as the (y) in their model, but did not include this in the dataset.
   # So we are going to create it - run the following line, assuming "df" is your data frame (feel free to change that):
-df$prop.cons <- df$eaten/df$prey 
+data$prop.cons <- data$eaten/data$prey
 
 # (Q1) - The code I've provided in line 13 above is performing two operations at once. What are they? (2 pts)
 
