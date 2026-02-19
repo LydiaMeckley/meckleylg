@@ -16,7 +16,6 @@ LM_wd("meckleylg")
 
 # Read in the "Toscano_Griffen_Data.csv" data from GitHub and load the three packages we used in the tutorial this week.
 # The paper these data came from is uploaded to Canvas as "Toscano&Griffen_2014_JAE..."
-setwd("C:/GitHub/R4Eco_2026/Week6")
 LM_wd(repo="R4Eco_2026", folder="week6")
 
 data <- read.csv("Toscano_Griffen_Data.csv")
@@ -49,7 +48,7 @@ data$prop.cons <- data$eaten/data$prey
 # (Q2) - Did the interactive effect change which variables predict proportional consumption? How, SPECIFICALLY, did the results change? (5 pts)
   #The interactive effect did change which variables predict proportional consumption. The results changed by the significance for carapace width, going from being significant to not significant. The other variables stayed in the same significance. With temperature and carapace width having an interactive effect, they are significant, meaning that they both can influence each other.
 
-    ###MAYBE ADD A LITTLE MORE TO EXPLAIN###
+      #If the other way around: The interactive effect did change which variables predict proportional consumption. The proportional consumption changed from being statsitically significant to being not significant. The other variables remained at having no statistical significance, even with the interactive effect.
 
 # (Q3) - Plot the residuals of both models. Do you think either model is a good fit? Why or why not? (3 pts)
   #I do not think either model is a good fit. Both of the plots show a negative slope in the residuals, and they are not evenly distributed around the zero line.
@@ -65,6 +64,8 @@ AIC(gam.mod2)
 
 # (Q4) - Which model is a better fit? (2 pt)
   #The better fit model is the gam.mod2 model.
+
+    #fix if it is with the other Y and not the one I am using.
 
 # (Q5) - Based on the residuals of your generalized additive models, how confident are you in these results? (2 pts)
   #Based on the residuals and the results provided from the AIC, I am fairly confident in these results. They both look very similar to each other, but the gam.mod2 model looks more of a better fit than the first model does. The gam.mod2 model also has the data points closer to the zero line.
