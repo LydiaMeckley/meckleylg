@@ -46,8 +46,6 @@ data$prop.cons <- data$eaten/data$prey
 # (Q1) - The code I've provided in line 13 above is performing two operations at once. What are they? (2 pts)
   #The first operation that is being performed is dividing the data from the eaten column by the data from the prey column. The second operation that is being performed is assigning the newly generated data into a new column and naming it proportion consumed.
 
-    ###IS THIS RIGHT???### - ask in class
-
 # (Q2) - Did the interactive effect change which variables predict proportional consumption? How, SPECIFICALLY, did the results change? (5 pts)
   #The interactive effect did change which variables predict proportional consumption. The results changed by the significance for carapace width, going from being significant to not significant. The other variables stayed in the same significance. With temperature and carapace width having an interactive effect, they are significant, meaning that they both can influence each other.
 
