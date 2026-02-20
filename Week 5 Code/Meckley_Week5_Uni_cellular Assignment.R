@@ -200,4 +200,4 @@ hist(data$RepTime.sec)
   # Don't cheat by looking at the paper! 
     # This hypothesis does not need to be correct - it only needs to be ecologically rational based these two figures.
       #A hypothesis for the two tallest bars in the histogram could possibly represent two different phenotypes, and being expressed more than others over specific time intervals during the life history of the organism, and those two have evolved to be the most prevalent in the population out of all other possible phenotypes.
-
+#Perfect!
