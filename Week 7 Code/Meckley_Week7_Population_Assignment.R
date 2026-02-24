@@ -68,14 +68,14 @@ LotVmod <- function (Time, State, Pars) {
 
 # (3) - By only changing values for alpha, beta, gamma, and/or delta
 # change the default parameters of the L-V model to best approximate the relationship between Limncalanus and D.mendotae, assuming both plots are on the same time scale.
-Pars <- c(alpha = 4, beta = 0.5, gamma = 0.3, delta = 0.7)
+Pars <- c(alpha = 2, beta = 0.5, gamma = 0.3, delta = 0.7)
 State <- c(x = 10, y = 10)
 Time <- seq(0, 100, by = 1)
 out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
 matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
 legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), box.lwd = 0)
 
-    ###DOES THIS LOOK GOOD ENOUGH??? IDK###
+    ###DOES THIS LOOK GOOD ENOUGH??? IDK### or the one below it???
 
 # What are the changes you've made to alpha, beta, gamma, and delta from the default values; and what do they say in a relative sense about the plankton data? (4 pts)
   #I kept the alpha and beta values the same, changed gamma from 0.2 to 0.3, and changed delta from 0.6 to 0.7.
@@ -83,13 +83,13 @@ legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), b
     #ASK IF IT WAS OKAY TO ONLY HAVE CHANGED TWO THINGS?#
       ###ALSO ANSWER THE OTHER PART TO THIS QUESTION###
 
-# Are there other paramenter changes that could have created the same end result? (2 pts)
+# Are there other parameter changes that could have created the same end result? (2 pts)
     ###WHAT DOES THIS MEAN???###
 
 # Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
 # and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
 
-Pars <- c(alpha = 4, beta = 0.5, gamma = 0.2, delta = 0.6)
+Pars <- c(alpha = 4, beta = 0.7, gamma = 0.2, delta = 0.5) #should this be .6 or .5
 State <- c(x = 10, y = 10)
 Time <- seq(0, 100, by = 1)
 out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
