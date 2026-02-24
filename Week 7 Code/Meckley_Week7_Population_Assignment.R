@@ -41,17 +41,29 @@ ggplot(data)  +
 
 # (1) - Which species is most likely to be r-selected prey and which its primary predator? (2 pts)
 # What is one relationship the third species MIGHT have to the first two? (2 pts)
+  #The species that is most likely to be r-selected prey is...
 
 #Now copy/paste in the Lotka-Volterra function, plotting script, and load the "deSolve" package from the tutorial:
+library(deSolve)
+
+LotVmod <- function (Time, State, Pars) {
+  with(as.list(c(State, Pars)), {
+    dx = x*(alpha - beta*y)
+    dy = -y*(gamma - delta*x)
+    return(list(c(dx, dy)))
+  })
+}
 
 # (2) - What do alpha, beta, gamma, and delta represent in this function? (4 pts)
-  #Alpha represents the population 
-  #Beta represents
-  #Gamma represents
-  #Delta represents
+  #Alpha represents the population growth rate of prey.
+  #Beta represents predation rate.
+  #Gamma represents prey consumption rate for population stability.
+  #Delta represents prey consumption rate when predators die off. (double check all of these)
 
 # (3) - By only changing values for alpha, beta, gamma, and/or delta
 # change the default parameters of the L-V model to best approximate the relationship between Limncalanus and D.mendotae, assuming both plots are on the same time scale.
+
+
 # What are the changes you've made to alpha, beta, gamma, and delta from the default values; and what do they say in a relative sense about the plankton data? (4 pts)
 # Are there other paramenter changes that could have created the same end result? (2 pts)
 # Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
