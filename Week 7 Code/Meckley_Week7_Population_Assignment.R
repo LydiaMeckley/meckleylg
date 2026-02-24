@@ -41,7 +41,9 @@ ggplot(data)  +
 
 # (1) - Which species is most likely to be r-selected prey and which its primary predator? (2 pts)
 # What is one relationship the third species MIGHT have to the first two? (2 pts)
-  #The species that is most likely to be r-selected prey is...
+  #The species that is most likely to be r-selected prey is D.mendotae, and its primary predator is LimncalanusF LimncalanusM. One relationship that Bythotrephes has with LimncalanusF LimncalanusM, is that they are both predators, so they have competition over prey with one another. The relationship that Bythotrephes has with D.mendotae is that D.mendotae is the prey of Bythotrephes.
+
+      ###WAIT WHAT IS THE THE OTHER LIMNCALANUS?????? THERE ARE TWO###
 
 #Now copy/paste in the Lotka-Volterra function, plotting script, and load the "deSolve" package from the tutorial:
 library(deSolve)
@@ -54,21 +56,42 @@ LotVmod <- function (Time, State, Pars) {
   })
 }
 
+      ###WAIT THIS EQUATION???###
+
 # (2) - What do alpha, beta, gamma, and delta represent in this function? (4 pts)
   #Alpha represents the population growth rate of prey.
   #Beta represents predation rate.
   #Gamma represents prey consumption rate for population stability.
-  #Delta represents prey consumption rate when predators die off. (double check all of these)
+  #Delta represents prey consumption rate when predators die off.
+
+    ###DOUBLE CHECK ALL OF THESE###
 
 # (3) - By only changing values for alpha, beta, gamma, and/or delta
 # change the default parameters of the L-V model to best approximate the relationship between Limncalanus and D.mendotae, assuming both plots are on the same time scale.
+Pars <- c(alpha = 4, beta = 0.5, gamma = 0.3, delta = 0.7)
+State <- c(x = 10, y = 10)
+Time <- seq(0, 100, by = 1)
+out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
+matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
+legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), box.lwd = 0)
 
+    ###DOES THIS LOOK GOOD ENOUGH??? IDK###
 
 # What are the changes you've made to alpha, beta, gamma, and delta from the default values; and what do they say in a relative sense about the plankton data? (4 pts)
+  #I kept the alpha and beta values the same, changed gamma from 0.2 to 0.3, and changed delta from 0.6 to 0.7.
+
+    #ASK IF IT WAS OKAY TO ONLY HAVE CHANGED TWO THINGS?#
+      ###ALSO ANSWER THE OTHER PART TO THIS QUESTION###
+
 # Are there other paramenter changes that could have created the same end result? (2 pts)
+    ###WHAT DOES THIS MEAN???###
+
 # Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
 # and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
 
-
-
+Pars <- c(alpha = 4, beta = 0.5, gamma = 0.2, delta = 0.6)
+State <- c(x = 10, y = 10)
+Time <- seq(0, 100, by = 1)
+out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
+matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
 
