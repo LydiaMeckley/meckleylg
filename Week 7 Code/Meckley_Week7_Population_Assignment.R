@@ -41,7 +41,7 @@ ggplot(data)  +
 
 # (1) - Which species is most likely to be r-selected prey and which its primary predator? (2 pts)
 # What is one relationship the third species MIGHT have to the first two? (2 pts)
-  #The species that is most likely to be r-selected prey is D.mendotae, and its primary predator is LimncalanusF LimncalanusM. One relationship that Bythotrephes has with LimncalanusF LimncalanusM, is that they are both predators, so they have competition over prey with one another. The relationship that Bythotrephes has with D.mendotae is that D.mendotae is the prey of Bythotrephes.
+  #The species that is most likely to be r-selected prey is D.mendotae, and its primary predator is Limncalanus. One relationship that Bythotrephes has with Limncalanus, is that they are both predators, so they have competition over prey with one another. The relationship that Bythotrephes has with D.mendotae is that D.mendotae is the prey of Bythotrephes.
 
       ###WAIT WHAT IS THE THE OTHER LIMNCALANUS?????? THERE ARE TWO###
 
@@ -56,7 +56,11 @@ LotVmod <- function (Time, State, Pars) {
   })
 }
 
-      ###WAIT THIS EQUATION???###
+Pars <- c(alpha = 2, beta = 0.5, gamma = .2, delta = .6)
+State <- c(x = 10, y = 10)
+Time <- seq(0, 100, by = 1)
+out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
+
 
 # (2) - What do alpha, beta, gamma, and delta represent in this function? (4 pts)
   #Alpha represents the population growth rate of prey.
@@ -75,19 +79,27 @@ out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
 matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
 legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), box.lwd = 0)
 
-    ###DOES THIS LOOK GOOD ENOUGH??? IDK### or the one below it???
-
 # What are the changes you've made to alpha, beta, gamma, and delta from the default values; and what do they say in a relative sense about the plankton data? (4 pts)
-  #I kept the alpha and beta values the same, changed gamma from 0.2 to 0.3, and changed delta from 0.6 to 0.7.
+  #I kept the alpha and beta values the same, changed gamma from 0.2 to 0.3, and changed delta from 0.6 to 0.7. 
+    #The alpha value was left at 0.2 because it correctly represented what the other plot did in terms of the population growth rate for prey. Over time, the prey growth rate also appears to be decreasing.
+    #The beta value was left at 0.5 because it correctly represented what the other plot did in terms of predation rate, or the death rate of the prey. Over time, 
+    #The gamma value was increased to match the previous plot because the predator and prey populations fluctuated in size more rapidly over time, meaning their populations increased and decreased quickly based on the predator's consumption of the prey.
+    #The delta value was increased to match the previous plot because the predators are more dependent on this prey item than the default parameters. That means that over time, the predators are consuming more of the prey item, which causes them to die off, both the prey and predators, more quickly.
 
-    #ASK IF IT WAS OKAY TO ONLY HAVE CHANGED TWO THINGS?#
-      ###ALSO ANSWER THE OTHER PART TO THIS QUESTION###
+      ###ASK WHAT BETA DOES AGAIN, I AM GETTING STUCK### - and finish that answer
 
 # Are there other parameter changes that could have created the same end result? (2 pts)
-    ###WHAT DOES THIS MEAN???###
+  #Yes, there are other parameter changes that could have created the same end result. The changes that could have been made are the state, x and y, changing the y to 7 for example. Another way is changing the time sequence from 1 to 0.9. Doing that adds larger predator population sizes.
+
+     ###AM I DOING THIS RIGHT???###
 
 # Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
 # and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
+
+
+
+
+      ###GET RID OF THIS IF OTHER ONE IS BETTER###
 
 Pars <- c(alpha = 4, beta = 0.7, gamma = 0.2, delta = 0.5) #should this be .6 or .5
 State <- c(x = 10, y = 10)
