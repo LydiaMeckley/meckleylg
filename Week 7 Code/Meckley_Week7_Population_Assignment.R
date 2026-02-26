@@ -68,8 +68,6 @@ matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
   #Gamma represents prey consumption rate for population stability.
   #Delta represents prey consumption rate when predators die off.
 
-    ###DOUBLE CHECK ALL OF THESE###
-
 # (3) - By only changing values for alpha, beta, gamma, and/or delta
 # change the default parameters of the L-V model to best approximate the relationship between Limncalanus and D.mendotae, assuming both plots are on the same time scale.
 Pars <- c(alpha = 2, beta = 0.5, gamma = 0.3, delta = 0.7)
@@ -89,27 +87,24 @@ legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), b
 # Are there other parameter changes that could have created the same end result? (2 pts)
   #Yes, there are other parameter changes that could have created the same end result. The changes that could have been made are the state, x and y, changing the y to 7 for example. Another way is changing the time sequence from 1 to 0.9. Doing that adds larger predator population sizes.
 
-# Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
-# and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      ###GET RID OF THIS IF OTHER ONE IS BETTER###
-
-Pars <- c(alpha = 4, beta = 0.7, gamma = 0.2, delta = 0.5) #should this be .6 or .5
-State <- c(x = 10, y = 10)
+    #changed state#
+Pars <- c(alpha = 2, beta = 0.5, gamma = .2, delta = .6)
+State <- c(x = 10, y = 7)
 Time <- seq(0, 100, by = 1)
 out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
 matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
+legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), box.lwd = 0)
+
+    #changed time sequence#
+Pars <- c(alpha = 2, beta = 0.5, gamma = .2, delta = .6)
+State <- c(x = 10, y = 10)
+Time <- seq(0, 100, by = 0.9)
+out <- as.data.frame(ode(func = LotVmod, y = State, parms = Pars, times = Time))
+matplot(out[,-1], type = "l", xlab = "time", ylab = "population")
+legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), box.lwd = 0)
+
+
+# Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
+# and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
+
 
