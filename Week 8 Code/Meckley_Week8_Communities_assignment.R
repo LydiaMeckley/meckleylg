@@ -71,8 +71,6 @@ text(mod1, display="sites", labels = as.character(riffle))
 pl <- ordiellipse(mod1, riffle, kind="se", conf=0.95, lwd=2, draw = "polygon", 
                   col="skyblue", border = "blue")
 
-    #how do I read that?#
-
 # If your code results in an "error: 'x' must be numeric" Then run this line of code to force all bugs to numeric
   # Assuming your data frame of macroinvertebrates is called "bugs".
 bugs <- sapply(df3.bugs, as.numeric)
@@ -80,6 +78,7 @@ riffle <- sapply(df3.riffle, as.character)
 
 # (Q1) - Which group of samples is clearly different along Axis 1? Does this make sense based on what you know about the data? (3 pts)
 
+    ##WHICH ONE IS AXIS 1##
 
 # Use the rarefaction function from the tutorial to plot 250-individual subsamples grouped and summed by the riffle where they were collected.
   # Hint: use the subset() function to select only the samples from a specific riffle
@@ -187,6 +186,8 @@ rarefaction(samples, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
 summed.riffles <- rbind(samples)
 rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
+
+    ##HELP I STILL CANT FIGURE IT OUT## - ask him this first thing #########################
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
