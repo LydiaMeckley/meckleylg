@@ -31,16 +31,14 @@ data <- read.csv("SR_Inverts.csv")
 df <- data[,-1:-2]
 
 #Now transpose the data - remember species need to be columns and sites need to be rows for analysis:
-df2 <- t(df) #now make the first row into column names
+df2 <- t(df)
 colnames(df2) <- df$Sample
 df3 <- df2[-1,]
 
-    #IT WORKS WHEN I DO IT MY WAY BUT NOT HIS WAY???# (ASK FIRST)
-
 # Use these two lines to turn your first row into column names and then remove the first row.
   # This assumes your data frame is named "df". You are welcome to change that.
-names(df2) <- lapply(df2[1, ], as.character)
-df3 <- df2[-1,] 
+#names(df2) <- lapply(df2[1, ], as.character)  #IGNORE THIS#
+#df3 <- df2[-1,]  #IGNORE THIS#
 
 # You should now have a data frame with samples as row names and species as column names.
     # The first column should be the riffle where these samples were collected.
@@ -50,32 +48,35 @@ df3 <- df2[-1,]
 # Now test if "riffle" is a significant predictor of the macroinvertebrate community.
 head(df3)
 
-  #SAYS THAT IT NEEDS TO BE A DATAFRAME FOR THIS TO WORK# (ASK ALONG WITH THAT)
-
 df3.dataframe <- as.data.frame(df3)
 
-  #TELLS ME THERE ARE NAs????# (ASK SECOND - ITS WHEN I CHANGE THE BUGS TO NUMERIC) 
+df3.bugs <- df3.dataframe[,-1]
+df3.riffle <- df3.dataframe[,1]
 
-mod1 <- rda(riffle ~ bugs, df3.dataframe)
+bugs.dataframe <- as.data.frame(bugs) #do i need this?
+
+mod1 <- rda(bugs.dataframe ~ riffle)
 mod1
 anova(mod1)
 
   # Report your p-value and constrained variance for the model.
+    #The p-value is 0.002 and the constrained variance is 1.364e+04 
 
+      ###IS INERTIA THE VARIANCE###
 
   # Plot Axis 1 and Axis 2 of the results with 95% confidence intervals around the riffles.
     # Hint: it will make things easier if you create two separate data frames. One with the Riffle names and one with the bugs.
 plot(mod1, type="n", display = c("sites", "scores"))
-text(mod1, display="sites", labels = as.character(df3$riffle))
-pl <- ordiellipse(mod1, df3$riffle, kind="se", conf=0.95, lwd=2, draw = "polygon", 
+text(mod1, display="sites", labels = as.character(riffle))
+pl <- ordiellipse(mod1, riffle, kind="se", conf=0.95, lwd=2, draw = "polygon", 
                   col="skyblue", border = "blue")
+
+    #how do I read that?#
 
 # If your code results in an "error: 'x' must be numeric" Then run this line of code to force all bugs to numeric
   # Assuming your data frame of macroinvertebrates is called "bugs".
-bugs <- sapply(df3, as.numeric)
-riffle <- sapply(df3, as.character)
-
-  #THIS IS NOT WORKING# HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+bugs <- sapply(df3.bugs, as.numeric)
+riffle <- sapply(df3.riffle, as.character)
 
 # (Q1) - Which group of samples is clearly different along Axis 1? Does this make sense based on what you know about the data? (3 pts)
 
@@ -178,22 +179,18 @@ rarefaction<-function(x,subsample=5, plot=TRUE, color=TRUE, error=FALSE, legend=
   
 }
 
-samples <- as.data.frame(t(rowSums(t(bugs))))
+samples <- as.data.frame(t(rowSums(t(bugs)))) #subset by riffle so aggregate it???
 
 rarefaction(samples, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
-  
-
-#I ACTUALLT HAVE NO IDEA WHAT IS GOING ON HERE...# - getting weird errors.
-
-
 # (Q2) - Which riffle took the most effort to effectively sample? (2 pts)
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
-
+summed.riffles <- rbind(samples)
+rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
-
+rarefaction(samples, subsample=800, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q4) - Why do the curves stop at different locations on the x-Axis? (2 pts)
-
+#rda isnt the right thing to use
