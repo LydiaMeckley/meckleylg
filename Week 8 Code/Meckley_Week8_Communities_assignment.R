@@ -53,6 +53,9 @@ df3.dataframe <- as.data.frame(df3)
 df3.bugs <- df3.dataframe[,-1]
 df3.riffle <- df3.dataframe[,1]
 
+bugs <- sapply(df3.bugs, as.numeric)
+riffle <- sapply(df3.riffle, as.character)
+
 bugs.dataframe <- as.data.frame(bugs) #do i need this?
 
 mod1 <- rda(bugs.dataframe ~ riffle)
@@ -62,7 +65,7 @@ anova(mod1)
   # Report your p-value and constrained variance for the model.
     #The p-value is 0.002 and the constrained variance is 1.364e+04 
 
-      ###IS INERTIA THE VARIANCE###
+      ###IS INERTIA THE VARIANCE### or proportion??? yes proportion
 
   # Plot Axis 1 and Axis 2 of the results with 95% confidence intervals around the riffles.
     # Hint: it will make things easier if you create two separate data frames. One with the Riffle names and one with the bugs.
@@ -70,15 +73,15 @@ plot(mod1, type="n", display = c("sites", "scores"))
 text(mod1, display="sites", labels = as.character(riffle))
 pl <- ordiellipse(mod1, riffle, kind="se", conf=0.95, lwd=2, draw = "polygon", 
                   col="skyblue", border = "blue")
+summary(pl)
 
 # If your code results in an "error: 'x' must be numeric" Then run this line of code to force all bugs to numeric
   # Assuming your data frame of macroinvertebrates is called "bugs".
-bugs <- sapply(df3.bugs, as.numeric)
-riffle <- sapply(df3.riffle, as.character)
 
 # (Q1) - Which group of samples is clearly different along Axis 1? Does this make sense based on what you know about the data? (3 pts)
+    #R6? - also how do I know how this makes sense?
 
-    ##WHICH ONE IS AXIS 1##
+    #am I looking at RDA 1??# yes
 
 # Use the rarefaction function from the tutorial to plot 250-individual subsamples grouped and summed by the riffle where they were collected.
   # Hint: use the subset() function to select only the samples from a specific riffle
@@ -178,20 +181,29 @@ rarefaction<-function(x,subsample=5, plot=TRUE, color=TRUE, error=FALSE, legend=
   
 }
 
-samples <- as.data.frame(t(rowSums(t(bugs)))) #subset by riffle so aggregate it???
+sample1 <- as.data.frame(t(rowSums(t(subset.riffle[,-1]))))
+sample2 <- as.data.frame(t(rowSums(t(subset.riffle2))))
+sample3 <- as.data.frame(t(rowSums(t(subset.riffle3))))
+sample4 <- as.data.frame(t(rowSums(t(subset.riffle4))))
+sample5 <- as.data.frame(t(rowSums(t(subset.riffle5))))
+
+subset.riffle <- subset(df3.dataframe, df3.dataframe$Riffle == "WDH")
+subset.riffle2 <- subset(df3.dataframe, df3.dataframe$Riffle == "R5")
+subset.riffle3 <- subset(df3.dataframe, df3.dataframe$Riffle == "R6")
+subset.riffle4 <- subset(df3.dataframe, df3.dataframe$Riffle == "R7")
+subset.riffle5 <- subset(df3.dataframe, df3.dataframe$Riffle == "R9")
+
+summed.riffles <- rbind(subset.riffle, subset.riffle2, subset.riffle3, subset.riffle4, subset.riffle5)
 
 rarefaction(samples, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q2) - Which riffle took the most effort to effectively sample? (2 pts)
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
-summed.riffles <- rbind(samples)
 rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
-
-    ##HELP I STILL CANT FIGURE IT OUT## - ask him this first thing #########################
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
 rarefaction(samples, subsample=800, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q4) - Why do the curves stop at different locations on the x-Axis? (2 pts)
-#rda isnt the right thing to use
+#rda isnt the right thing to use because it is used for linear relationships - it should be a cca 
