@@ -63,9 +63,7 @@ mod1
 anova(mod1)
 
   # Report your p-value and constrained variance for the model.
-    #The p-value is 0.002 and the constrained variance is 1.364e+04 
-
-      ###IS INERTIA THE VARIANCE### or proportion??? yes proportion
+    #The p-value is 0.004 and the constrained variance is 1.628e-01.
 
   # Plot Axis 1 and Axis 2 of the results with 95% confidence intervals around the riffles.
     # Hint: it will make things easier if you create two separate data frames. One with the Riffle names and one with the bugs.
@@ -79,9 +77,7 @@ summary(pl)
   # Assuming your data frame of macroinvertebrates is called "bugs".
 
 # (Q1) - Which group of samples is clearly different along Axis 1? Does this make sense based on what you know about the data? (3 pts)
-    #R6? - also how do I know how this makes sense?
-
-    #am I looking at RDA 1??# yes
+    #Along Axis 1, R6 is the sample that is clearly different. This does make sense based on what I know about the data. That is because there are 29 different species at this riffle, while all the other riffles have less species.
 
 # Use the rarefaction function from the tutorial to plot 250-individual subsamples grouped and summed by the riffle where they were collected.
   # Hint: use the subset() function to select only the samples from a specific riffle
