@@ -40,13 +40,14 @@ summary(glmm.mod2)
 
 # The authors used proportional consumption of prey as the (y) in their model, but did not include this in the dataset.
   # So we are going to create it - run the following line, assuming "df" is your data frame (feel free to change that):
-data$prop.cons <- data$eaten/data$prey
+data$prop.cons <- data$eaten/data$prey#out of order with models
 
 # (Q1) - The code I've provided in line 13 above is performing two operations at once. What are they? (2 pts)
   #The first operation that is being performed is dividing the data from the eaten column by the data from the prey column. The second operation that is being performed is assigning the newly generated data into a new column and naming it proportion consumed.
 
 # (Q2) - Did the interactive effect change which variables predict proportional consumption? How, SPECIFICALLY, did the results change? (5 pts)
   #The interactive effect did change which variables predict proportional consumption. The proportional consumption (intercept) changed from being statistically significant to being not significant when the interaction was added. The other variables remained at having no statistical significance, even with the interactive effect.
+#intercept is not proportion consumed -- that's the y. Intercept only matters when a predictor is a factor.
 
 # (Q3) - Plot the residuals of both models. Do you think either model is a good fit? Why or why not? (3 pts)
   #I do not think either model is a good fit. Both of the plots show a negative slope in the residuals, and they are not evenly distributed around the zero line.
@@ -66,3 +67,4 @@ AIC(gam.mod2)
 
 # (Q5) - Based on the residuals of your generalized additive models, how confident are you in these results? (2 pts)
   #Based on the residuals and the results provided from the AIC scores, I am fairly confident in these results. Both of the plots look very similar to each other, but I do see a slight difference in that the first model has residuals that are a little more evenly distributed than the second one.
+#Where is the code to plot residuals of your GAMs?
