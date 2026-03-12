@@ -181,21 +181,37 @@ rarefaction<-function(x,subsample=5, plot=TRUE, color=TRUE, error=FALSE, legend=
   
 }
 
-sample1 <- as.data.frame(t(rowSums(t(subset.riffle[,-1]))))
-sample2 <- as.data.frame(t(rowSums(t(subset.riffle2))))
-sample3 <- as.data.frame(t(rowSums(t(subset.riffle3))))
-sample4 <- as.data.frame(t(rowSums(t(subset.riffle4))))
-sample5 <- as.data.frame(t(rowSums(t(subset.riffle5))))
-
 subset.riffle <- subset(df3.dataframe, df3.dataframe$Riffle == "WDH")
-subset.riffle2 <- subset(df3.dataframe, df3.dataframe$Riffle == "R5")
-subset.riffle3 <- subset(df3.dataframe, df3.dataframe$Riffle == "R6")
-subset.riffle4 <- subset(df3.dataframe, df3.dataframe$Riffle == "R7")
-subset.riffle5 <- subset(df3.dataframe, df3.dataframe$Riffle == "R9")
+sub.riff <- subset.riffle[,-1]
+numeric.1 <- sapply(sub.riff, as.numeric)
 
-summed.riffles <- rbind(subset.riffle, subset.riffle2, subset.riffle3, subset.riffle4, subset.riffle5)
+subset.riffle2 <- subset(df3.dataframe, df3.dataframe$Riffle == "R5")
+sub.riff2 <- subset.riffle2[,-1]
+numeric.2 <- sapply(sub.riff2, as.numeric)
+
+subset.riffle3 <- subset(df3.dataframe, df3.dataframe$Riffle == "R6")
+sub.riff3 <- subset.riffle3[,-1]
+numeric.3 <- sapply(sub.riff3, as.numeric)
+
+subset.riffle4 <- subset(df3.dataframe, df3.dataframe$Riffle == "R7")
+sub.riff4 <- subset.riffle4[,-1]
+numeric.4 <- sapply(sub.riff4, as.numeric)
+
+subset.riffle5 <- subset(df3.dataframe, df3.dataframe$Riffle == "R9")
+sub.riff5 <- subset.riffle5[,-1]
+numeric.5 <- sapply(sub.riff5, as.numeric)
+
+sample1 <- as.data.frame(t(rowSums(t(numeric.1))))
+sample2 <- as.data.frame(t(rowSums(t(numeric.2))))
+sample3 <- as.data.frame(t(rowSums(t(numeric.3))))
+sample4 <- as.data.frame(t(rowSums(t(numeric.4))))
+sample5 <- as.data.frame(t(rowSums(t(numeric.5))))
+
+summed.riffles <- rbind(sample1, sample2, sample3, sample4, sample5)
 
 rarefaction(samples, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
+
+#samples <- as.data.frame(t(rowSums(t(bugs))))
 
 # (Q2) - Which riffle took the most effort to effectively sample? (2 pts)
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
@@ -203,7 +219,7 @@ rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
-rarefaction(samples, subsample=800, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
+rarefaction(summed.riffles, subsample=800, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q4) - Why do the curves stop at different locations on the x-Axis? (2 pts)
 #rda isnt the right thing to use because it is used for linear relationships - it should be a cca 
