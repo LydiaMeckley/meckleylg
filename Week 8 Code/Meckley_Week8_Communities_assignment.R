@@ -77,7 +77,7 @@ summary(pl)
   # Assuming your data frame of macroinvertebrates is called "bugs".
 
 # (Q1) - Which group of samples is clearly different along Axis 1? Does this make sense based on what you know about the data? (3 pts)
-    #Along Axis 1, R6 is the sample that is clearly different. This does make sense based on what I know about the data. That is because there are 29 different species at this riffle, while all the other riffles have less species.
+    #Along Axis 1, R6 is the sample that is clearly different. This does make sense based on what I know about the data. That is because there are 29 different species at this riffle, while all the other riffles have less species. Looking at the plot as well, the R6 samples are the farthest away from the other samples on Axis 1. R6 is also a sample from more upstream than most of the other samples.
 
 # Use the rarefaction function from the tutorial to plot 250-individual subsamples grouped and summed by the riffle where they were collected.
   # Hint: use the subset() function to select only the samples from a specific riffle
@@ -205,17 +205,16 @@ sample5 <- as.data.frame(t(rowSums(t(numeric.5))))
 
 summed.riffles <- rbind(sample1, sample2, sample3, sample4, sample5)
 
-rarefaction(samples, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
-
-#samples <- as.data.frame(t(rowSums(t(bugs))))
+rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
 
 # (Q2) - Which riffle took the most effort to effectively sample? (2 pts)
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
-rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
+    #The riffle that took the most effort to effectively sample was V3, or the dark blue line on the plot.
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
 rarefaction(summed.riffles, subsample=800, plot=TRUE, color=TRUE, error=FALSE,  legend=TRUE, symbol)
+    #I do think that the differences between the riffles are ecologically meaningful. That is because they all start out at the same point, but clearly show a difference in the number of individuals collected in the subsamples and that there is a difference in mean species richness for all of the samples taken at each of the riffles. That also means that all of the riffles have different levels of species richness, or numbers of different species in them, showing the diversity between the riffles where the samples were collected.
 
 # (Q4) - Why do the curves stop at different locations on the x-Axis? (2 pts)
-#rda isnt the right thing to use because it is used for linear relationships - it should be a cca 
+  #The curves stop at different locations on the x-Axis because each riffle or subsample had a different number of individuals sampled.
