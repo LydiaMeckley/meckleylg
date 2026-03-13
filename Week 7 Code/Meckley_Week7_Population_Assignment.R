@@ -107,4 +107,4 @@ legend("topright", c("Limncalanus", "D.mendotae"), lty = c(1,2), col = c(1,2), b
 # Export your final L-V plot with a legend that includes the appropriate genus and/or species name as if the model results were the real plankton data, 
 # and upload with your script. (hint - remember which one is the predator and which is the prey) (8 pts)
 
-
+#Perfect
