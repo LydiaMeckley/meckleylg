@@ -30,7 +30,19 @@ invert.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Invertebrate_com
 invert <- as.data.frame(invert.tibble)
 head(invert)
 inverts <- invert[-1:-2,]
-row.names(inverts) <- inverts[1,]
+inverte <-as.data.frame(inverts)
+colnames(inverte) <- inverte[1,]
+invert.df <- inverte[-1,]
+
+abiotic.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Abiotic factors")
+abiotic.df <- as.data.frame(abiotic.tibble)
+
+      ###IS PARCEL SOMETHING I SHOULD BE COMBINING### - am i even doing this right???
+
+abiotic.df$names <- paste(abiotic.df$Parcel, abiotic.df$Land_Use)
+invert.df$names <- paste(invert.df$Parcel, invert.df$Land_use)
+abiotic.means <- aggregate(x = abiotic.df, by = list(abiotic.df$names), FUN = "mean")
+#add invert means next
 
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
@@ -40,5 +52,5 @@ row.names(inverts) <- inverts[1,]
 
 # (Q3 - 6 pts) Provide a 3-4 sentence synthesis of how these results relate to one another and the value of considering both together for interpreting biotic-abiotic interactions.
 
-stuff <- as.data.frame(sapply(BIC, as.numeric))
+#stuff <- as.data.frame(sapply(BIC, as.numeric))
 
