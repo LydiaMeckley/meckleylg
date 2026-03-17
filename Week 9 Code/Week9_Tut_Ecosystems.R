@@ -25,10 +25,7 @@ LM_wd("meckleylg")
 
 library(readxl)
 
-setwd("C:/GitHub/R4Eco_2024/Week9")
-
-LM_wd(repo="R4Eco_2026", folder="week8")
-data <- read.csv("SR_Inverts.csv")
+LM_wd(repo="R4Eco_2026", folder="Week9")
 
 # First, read in the abiotic data:
   # Make sure the excel file is NOT open on your computer or it will generate an error (unlike read.csv)
@@ -40,19 +37,20 @@ abiotic.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Abiotic factors
 # This can easily be fixed with our old friend as.data.frame:
 abiotic <- as.data.frame(abiotic.tibble)
 
-# First let's see what patterns might exist in the soil chemistry by land use or site:
+# First let's see what patterns might exist in the soil chemistry by land use or site: (does pH vary by site? yes!)
 head(abiotic)
 boxplot(pH ~ Site, data= abiotic, main = "pH by Site")
 boxplot(pH ~ Land_Use, data= abiotic, main = "pH by Land Use")
 
-# What about a micronutrient like potassium AKA Kalium (the authors are Dutch)
+# What about a micronutrient like potassium AKA Kalium (the authors are Dutch) (playing with data to see what stuff is diff or the same) (yes it does)
 boxplot(Kalium ~ Site, data= abiotic, main = "K by Site")
 boxplot(Kalium ~ Land_Use, data= abiotic, main = "K by Land Use")
 
-# Or a macronutrient,like total nitrogen:
-boxplot(totalN ~ Site, data= abiotic, main = "N by Site")
+# Or a macronutrient,like total nitrogen: (yes, you expect changes here)
+boxplot(totalN ~ Site, data= abiotic, main = "N by Site") 
 boxplot(totalN ~ Land_Use, data= abiotic, main = "N by Land Use")
   # I am surprised! I expected post-ag to have high legacy nitrogen in the soils.
+  #This is how we explore data to maybe see what we want to ask, especially for the FINAL PROJECT
 
 # We can continue to look at more comparisons like this. 
   # For now, suffice that there are clearly differences in soil chemistry between use and site details.
@@ -61,16 +59,18 @@ boxplot(totalN ~ Land_Use, data= abiotic, main = "N by Land Use")
 # We'll start by looking at community comparisons between the soil and the nematodes:
 # To do this we'll read in the sheet with nematode community data.
   # I don't know who goes through the trouble to identify nematodes, but luckily for us these authors did.
+  #Nice clean community data
 nema.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Nematode_community")
 nema <- as.data.frame(nema.tibble)
 head(nema)
 
-# The first thing to notice here is there are 3 nematode samples per plot, but 5 abiotic samples.
+# The first thing to notice here is there are 3 nematode samples per plot, but 5 abiotic samples.- how can we possibly compare these things?
   # The location data are compatible, but the number of samples are not.
-# The most straightforward correction is to average data by plot to create a 1-to-1 comparison.
+# The most straightforward correction is to average data by plot to create a 1-to-1 comparison. SO WE JUST TAKE THE MEANS!!! - but how do we do this? what function do we use??? - WE AGGREGATE IT WOW!!! we need a unique identifier do be able to take the mean of those specific columns
 # Unfortunately for us, the $plot is repeated by location and type.
   # so we need a unique identifier for each plot within each land use, within each location.
-# For this, we will turn to the paste() function
+# For this, we will turn to the paste() function - mushes all the columns you include in the function INTO A SINGLE VALUE
+    #be aware that each SHEET HAS DIFFERENT NAMES FOR THE SAME THINGS sometimes
 abiotic$names <- paste(abiotic$Site, abiotic$Land_Use, abiotic$Plot)
 
 head(abiotic)
@@ -88,7 +88,7 @@ head(abiotic.means)
 nema.means <- aggregate(x = nema, by = list(nema$names), FUN = "mean")
 # This also created warnings, so we should see what the data frame looks like:
 head(nema.means)
-  # It's the same issue of creating NAs, which we can ignore.
+  # It's the same issue of creating NAs, which we can ignore. - everyone is the same (in group 1)
 
 # For our multivariate analysis we need to remove the NA and plot columns:
 abiotic.means1 <- abiotic.means[,-16] # NA column
@@ -100,12 +100,12 @@ nema.means1 <- nema.means[,-41] # Remove NAs
 nema.means2 <- as.data.frame(nema.means1[,-1:-4]) # Remove plot and NAs
 nema.means2 <- sapply(nema.means2, as.numeric )
 
-# And we can FINALLY compare the abiotic data against the biotic communities:
+# And we can FINALLY compare the abiotic data against the biotic communities: - colnames to see what the options are
 library(vegan)
 colnames(abiotic.means2)
 ord <- rda(nema.means2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.means2)
 ord
-#63% of the variance explained is pretty good!
+#63% of the variance explained is pretty good! - what variables in the soil contain nematoads (effect?) (what we did above was make a global model, combining everything.)
   # It looks like almost all of it comes from Axis 1
 anova(ord)  
   # But the p-value is not significant. It appears our data might be over-fitted
@@ -113,6 +113,7 @@ plot(ord, ylim = c(-2,2), xlim = c(-5,5))
   # I've added the ylim and xlim to remove two extreme outliers and make the plot easier to interpret.
   # The first hint at our high p-value is the co-linear terms. Some arrows are nearly on top of each other.
   # This is penalizing the model, so we should use a selection process to remove predictors that are not important.
+        #forward or backward design a model - they are not the best approach though, so what we do below is better! taking steps until you get the smallest/simplest model that explains as much variance as possible (also called a stepwise)
 
 # The ordistep() and ordiR2step() functions will do this. They use a selection process to keep or remove variables.
   # ordistep() will generate p-values with significant predictors.
@@ -121,13 +122,26 @@ plot(ord, ylim = c(-2,2), xlim = c(-5,5))
 # We need to give it a bit of help. The step function needs something to compare against.
   # We will use an intercept model, essentially acting as the null hypothesis:
   #
-ord <- rda(nema.means2 ~., abiotic.means2) # shorthand for the model that includes everything.
-ord.int <- rda(nema.means2 ~1, abiotic.means2) # shorthand for the model that only includes intercepts.
+ord <- rda(nema.means2 ~., abiotic.means2) # shorthand for the model that includes everything. (the period is)
+ord.int <- rda(nema.means2 ~1, abiotic.means2) # shorthand for the model that only includes intercepts. (force everything to the intercept, acts as the null hypothesis to compare all other models with)
 
 # The "both" selection method essentially takes two steps forward, then one step back, and compares the results.
   # Then selects which variable to drop and repeats the process
 step.mod <- ordistep(ord.int, scope = formula(ord), selection = "both")
+
+                 Df    AIC      F Pr(>F)   #AIC IS BEST TO LOOK AT
++ Ca         1 81.575 6.9580  0.005 **
++ Magnesium  1 83.556 4.5863  0.010 **
++ totalN     1 80.453 8.4161  0.015 * 
++ Perc_ash   1 83.401 4.7626  0.025 * 
++ TotalP     1 84.081 3.9976  0.030 * 
++ pH         1 86.061 1.9194  0.140   
++ Al         1 87.311 0.7151  0.335   
++ Kalium     1 87.775 0.2879  0.830   
++ OlsenP     1 87.783 0.2800  0.850 
+
 step.mod$anova
+  #all that matters is nitrogen, the rest is all noise
 
 step.R2mod <- ordiR2step(ord.int, scope = formula(ord), selection = "forward")
 # No ANOVA test for the ordiR2step function.
@@ -163,7 +177,7 @@ abiotic.means2$Parcel <- unique(abiotic$Parcel)
   # Merge can be used for more complex problems if needed (see ?merge). Fortunately, in our data the Parcel match is clear.
 soil.plants <- merge(abiotic.means2, plants, by = "Parcel")
 
-# Let's take a quick look at our data.
+# Let's take a quick look at our data. - if we wanna talk about growth, we should look at leaves
   # This data frame is getting large enough that View() might be more helpful than head() for an initial look:
 View(soil.plants)
 
@@ -188,7 +202,7 @@ fit.geom <- fitdist(soil.plants$Leaves, distr = "geom")
 #call from:
 gofstat(list(fit.weibull, fit.norm, fit.gamma, 
              fit.lnorm, fit.nbinom, fit.logis, fit.geom))
-# Log normal is clearly the best fit. 
+# Log normal is clearly the best fit. bc the Y variable is normal, we will just start with a simple linear model BELOW
 
 
 # While we have not checked the distribution of the $Leaves response, this is a good indication we just might be able to get away with a linear model. 
@@ -206,7 +220,7 @@ colnames(soil.plants)
   # In other words, land use is more important than ID.
 # Based on the available options, we'll start with this global model:
 mod1 <- lm(Leaves ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP + Land_use + Species_code, data = soil.plants)
-summary(mod1)
+summary(mod1)   #total nitrogen is significant
 anova(mod1)
 AIC(mod1)
   # Notice the NAs in the summary? We have way too many variables relative to the number of samples.
@@ -224,24 +238,24 @@ AIC(mod1,mod2)
 # Check the residuals:
 plot(mod2$residuals)
   # The residuals aren't great, but they aren't terrible either.
-  # It's a good sign we'll be able to stick with a linear model.
+  # It's a good sign we'll be able to stick with a linear model. ###
 
 summary(mod2)$adj.r.squared
 # The adjusted R-squared of the model is pretty good for ecological data at 0.55
 
-# We'll drop the kalium (aka potassium) from the model now because it's not showing much predictive ability.
+# We'll drop the kalium (aka potassium) from the model now because it's not showing much predictive ability. - it matters the least
 mod3 <- lm(Leaves ~ pH + totalN + Species_code,soil.plants)
 summary(mod3)
 anova(mod3)
-AIC(mod2, mod3)
-plot(mod3$residuals)
-summary(mod3)$adj.r.squared
+AIC(mod2, mod3) 
+plot(mod3$residuals) #about the same
+summary(mod3)$adj.r.squared #nearly identical
 
   # Hmmm, this really didn't do much of anything to the model. The AIC is just a little lower and R-squared is the same
   # Our residuals don't look any better either.
   # Perhaps potassium has an interactive effect with one of the other variables.
 
-# So adding kalium back in and looking at interactive effects in soil chemistry is the next step.
+# So adding kalium back in and looking at interactive effects in soil chemistry is the next step. - look at all the potential soil chemistry as potential interraction effects
 mod4 <- lm(Leaves ~ pH*totalN*Kalium + Species_code,soil.plants)
 summary(mod4)
 anova(mod4)
@@ -252,6 +266,7 @@ summary(mod4)$adj.r.squared
 #Our AIC and the residuals have not improved.
   # Even more, the interactions are all NA meaning they are not relevant in this model. 
   # Soil chemistry and nutrients might interact, but we do not have enough data to effective test whether this is the case.
+    #what if nitrogen is species specific
 
 # If we look at our anova or summary outputs thus far, the species are always significant, so growth varies by species.
   # But we know not all species have the same response or needs for soil quality and nutrients.
@@ -276,6 +291,8 @@ anova(mod6)
 AIC(mod2,mod3,mod4,mod5,mod6)
 plot(mod6$residuals)
 summary(mod6)$adj.r.squared
+
+#nitrogen matters for both the plants and nematodes, and it seems like there are some other interactions going on
 
 # Our updated model has nearly the same AIC (within 2 of each other), with slightly different relationships. 
 
