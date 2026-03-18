@@ -33,17 +33,18 @@ inverts <- invert[-1:-2,]
 inverte <-as.data.frame(inverts)
 colnames(inverte) <- inverte[1,]
 invert.df <- inverte[-1,]
-
+invert.df1 <- as.data.frame(sapply(invert.df[3:71], as.numeric))
 abiotic.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Abiotic factors")
 abiotic.df <- as.data.frame(abiotic.tibble)
 
       ###IS PARCEL SOMETHING I SHOULD BE COMBINING###
 
 abiotic.df$names <- paste(abiotic.df$Parcel, abiotic.df$Land_Use)
-invert.df$names <- paste(invert.df$Parcel, invert.df$Land_use)
+invert.df1$names <- paste(invert.df$Parcel, invert.df$Landuse)
 abiotic.means <- aggregate(x = abiotic.df, by = list(abiotic.df$names), FUN = "mean")
-invert.means <- aggregate(x = invert.df, by = list(invert.df$names), FUN = "mean")
+invert.means <- aggregate(x = invert.df1, by = list(invert.df1$names), FUN = mean)
 
+invert.df$Phenacolimax_major
 abiotic.mean1 <- abiotic.means[,-16] # NA column
 abiotic.mean2 <- abiotic.mean1[,-1:-6] # Plot and NA columns
 abiotic.mean2 <- sapply(abiotic.mean2, as.numeric ) # Make sure everything is numeric.
