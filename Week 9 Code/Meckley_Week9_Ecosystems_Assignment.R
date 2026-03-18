@@ -54,12 +54,21 @@ invert.mean2 <- as.data.frame(invert.mean1[,-1:-4]) # Remove plot and NAs
 invert.mean2 <- sapply(invert.mean2, as.numeric)
 
 colnames(abiotic.mean2)
-ord <- rda(invert.mean2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.means2)
+ord <- rda(invert.mean2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.mean2)
 ord
+ord <- rda(invert.mean2 ~., abiotic.mean2)
+step.mod <- ordistep(ord.int, scope = formula(ord), selection = "both")
+step.mod$anova
+step.R2mod <- ordiR2step(ord.int, scope = formula(ord), selection = "forward")
+ord2 <- rda(nema.means2 ~ totalN, abiotic.means2)   ###ADD WHATEVER I THINK PREDICTS WHAT###
+ord2
+anova(ord2)
+plot(ord2)
 
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
-    ###FIND IN WEEK 6### - when I get done ask him to make sure I did it right
+    ###when I get done ask him to make sure I did it right
+
 
 #what was the thread between nematodes and nitrogen? PLANTS!!!
 
