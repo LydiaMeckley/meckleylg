@@ -37,12 +37,25 @@ invert.df <- inverte[-1,]
 abiotic.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Abiotic factors")
 abiotic.df <- as.data.frame(abiotic.tibble)
 
-      ###IS PARCEL SOMETHING I SHOULD BE COMBINING### - am i even doing this right???
+      ###IS PARCEL SOMETHING I SHOULD BE COMBINING###
 
 abiotic.df$names <- paste(abiotic.df$Parcel, abiotic.df$Land_Use)
 invert.df$names <- paste(invert.df$Parcel, invert.df$Land_use)
 abiotic.means <- aggregate(x = abiotic.df, by = list(abiotic.df$names), FUN = "mean")
-#add invert means next
+invert.means <- aggregate(x = invert.df, by = list(invert.df$names), FUN = "mean")
+
+abiotic.mean1 <- abiotic.means[,-16] # NA column
+abiotic.mean2 <- abiotic.mean1[,-1:-6] # Plot and NA columns
+abiotic.mean2 <- sapply(abiotic.mean2, as.numeric ) # Make sure everything is numeric.
+abiotic.mean2 <- as.data.frame(abiotic.mean2) # Make sure it's in the right format.
+
+invert.mean1 <- invert.mean[,-41] # Remove NAs
+invert.mean2 <- as.data.frame(invert.mean1[,-1:-4]) # Remove plot and NAs
+invert.mean2 <- sapply(invert.mean2, as.numeric)
+
+colnames(abiotic.mean2)
+ord <- rda(invert.mean2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.means2)
+ord
 
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
