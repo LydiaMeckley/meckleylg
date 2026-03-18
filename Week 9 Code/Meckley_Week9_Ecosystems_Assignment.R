@@ -45,16 +45,22 @@ abiotic.means <- aggregate(x = abiotic.df, by = list(abiotic.df$names), FUN = "m
 invert.means <- aggregate(x = invert.df1, by = list(invert.df1$names), FUN = mean)
 
 invert.df$Phenacolimax_major
-abiotic.mean1 <- abiotic.means[,-16] # NA column
+abiotic.mean1 <- abiotic.means[,-16]
 abiotic.mean2 <- abiotic.mean1[,-1:-6] # Plot and NA columns
 abiotic.mean2 <- sapply(abiotic.mean2, as.numeric ) # Make sure everything is numeric.
 abiotic.mean2 <- as.data.frame(abiotic.mean2) # Make sure it's in the right format.
+invert.mean1 <- invert.means[,-1]
 
-invert.mean1 <- invert.mean[,-41] # Remove NAs
-invert.mean2 <- as.data.frame(invert.mean1[,-1:-4]) # Remove plot and NAs
-invert.mean2 <- sapply(invert.mean2, as.numeric)
+invert.mean1 <- invert.mean1[-5,]
+condition
 
-colnames(abiotic.mean2)
+col_sums <- colSums(invert.mean1[,-70])
+condition <- col_sums > 0
+df_subset_base <- invert.mean1[, condition]
+print(df_subset_base)
+invert.mean2 <- df_subset_base[,-54]
+print(invert.mean2)
+
 ord <- rda(invert.mean2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.mean2)
 ord
 ord <- rda(invert.mean2 ~., abiotic.mean2)
