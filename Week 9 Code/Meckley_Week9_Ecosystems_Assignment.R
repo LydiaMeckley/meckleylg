@@ -68,42 +68,58 @@ anova(step.mod)
 
       ###HOW DO I CONTINUE THEN???###  I need to explain why they do not determine the inverts - why they may not be significant for the inverts (maybe it wasn't measured)
 
-step.R2mod <- ordiR2step(ord.int, scope = formula(ord), selection = "forward") 
-
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
-
-abiotic.mean2$Parcel <- unique(abiotic.df$Parcel)
-
 decomposers <- invert.mean2[,-1:-36]
 decomposers2 <- decomposers[,-8:-17]
-decomposers2$decomp <- decomposers2$Collembola + decomposers2$Diplopoda + decomposers2$Dermaptera + decomposers2$Hydrobius_fuscipes + decomposers2$Tetranichus_sp + decomposers2$Philoscia_muscorum + decomposers2$Oniscus_asellus
+decomposers3 <- merge(abiotic.mean2, decomposers2)
+decomposers3$decomp <- decomposers3$Collembola + decomposers3$Diplopoda + decomposers3$Dermaptera + decomposers3$Hydrobius_fuscipes + decomposers3$Tetranichus_sp + decomposers3$Philoscia_muscorum + decomposers3$Oniscus_asellus
+na.omit(decomposers3$decomp)
 
-decomposers3 <- merge(abiotic.mean2, invert.df, by = "Parcel")
+#fit.weibull <- fitdist(decomposers2$decomp, distr = "weibull") ###
+fit.norm <- fitdist(decomposers2$decomp, distr = "norm")
+fit.gamma <- fitdist(decomposers2$decomp, distr = "gamma")
+#fit.lnorm <- fitdist(decomposers2$decomp, distr = "lnorm")  ###            
+fit.nbinom <- fitdist(decomposers2$decomp, distr = "nbinom")       
+fit.logis <- fitdist(decomposers2$decomp, distr = "logis")
+fit.geom <- fitdist(decomposers2$decomp, distr = "geom")
+gofstat(list(fit.norm, fit.gamma, 
+            fit.nbinom, fit.logis, fit.geom))
 
-fit.weibull <- fitdist(decomposers2$decomp, distr = "weibull")
-fit.norm <- fitdist(soil.plants$Leaves, distr = "norm")
-fit.gamma <- fitdist(soil.plants$Leaves, distr = "gamma")
-fit.lnorm <- fitdist(soil.plants$Leaves, distr = "lnorm")               
-fit.nbinom <- fitdist(soil.plants$Leaves, distr = "nbinom")       
-fit.logis <- fitdist(soil.plants$Leaves, distr = "logis")
-fit.geom <- fitdist(soil.plants$Leaves, distr = "geom")
-gofstat(list(fit.weibull, fit.norm, fit.gamma, 
-             fit.lnorm, fit.nbinom, fit.logis, fit.geom))
+    ###LOGIS IS BEST FIT (HAS LOWEST AIC)###
 
-mod1 <- lm(decomposers2 ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP + Land_use + Species_code, data = soil.plants)
+colnames(decomposers3)
+
+mod1 <- lm(decomp ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP, data = decomposers3)
 summary(mod1)   
 anova(mod1)
 AIC(mod1)
 summary(mod1)$adj.r.squared
 
-mod2 <- lm(Leaves ~ pH + totalN + Kalium + Species_code,soil.plants)
+mod2 <- lm(decomp ~ pH + totalN + Kalium, decomposers3)
 summary(mod2)
 anova(mod2)
 AIC(mod1,mod2)
-
 plot(mod2$residuals)
 summary(mod2)$adj.r.squared
+
+mod3 <- lm(decomp ~ totalN, decomposers3)
+summary(mod3)
+anova(mod3)
+
+
+
+
+
+
+
+
+mod6 <- lm(Leaves ~ Kalium + pH*totalN*Species_code,soil.plants)
+summary(mod6)
+anova(mod6)
+AIC(mod2,mod3,mod4,mod5,mod6)
+plot(mod6$residuals)
+summary(mod6)$adj.r.squared
 
 
 #what was the thread between nematodes and nitrogen? PLANTS!!!
@@ -116,3 +132,4 @@ summary(mod2)$adj.r.squared
 #plot(same as above)
 
     #go with something as long as i explain why I though it would have been explained
+
