@@ -36,8 +36,6 @@ invert.df1 <- as.data.frame(sapply(invert.df[3:71], as.numeric))
 abiotic.tibble <- read_excel("Penaetal_2016_data.xlsx", sheet = "Abiotic factors")
 abiotic.df <- as.data.frame(abiotic.tibble)
 
-      ###IS PARCEL SOMETHING I SHOULD BE COMBINING???###
-
 abiotic.df$names <- paste(abiotic.df$Parcel, abiotic.df$Land_Use)
 invert.df1$names <- paste(invert.df$Parcel, invert.df$Landuse)
 abiotic.means <- aggregate(x = abiotic.df, by = list(abiotic.df$names), FUN = "mean")
@@ -51,7 +49,6 @@ abiotic.mean2 <- as.data.frame(abiotic.mean2)
 invert.mean1 <- invert.means[,-1]
 
 invert.mean1 <- invert.mean1[-5,]
-#condition
 
 col_sums <- colSums(invert.mean1[,-70])
 condition <- col_sums > 0
@@ -63,39 +60,38 @@ print(invert.mean2)
 ord <- rda(invert.mean2 ~ pH + totalN + Perc_ash + Kalium + Magnesium + Ca + Al + TotalP + OlsenP, abiotic.mean2)
 ord
 anova(ord)
-  
-      ###IS MY NUMBER OKAY HERE???  0.4623 ### bad p value like the tutorial
 
 ord <- rda(invert.mean2 ~., abiotic.mean2)
-ord.int <- rda(invert.mean2 ~1, abiotic.mean2) # shorthand for the model that only includes intercepts.
+ord.int <- rda(invert.mean2 ~1, abiotic.mean2)
 step.mod <- ordistep(ord.int, scope = formula(ord), selection = "both")
 anova(step.mod)
 
-      ###NONE ARE SIGNIFICANT??? HOW DO I CONTINUE THEN???###
+      ###HOW DO I CONTINUE THEN???###  I need to explain why they do not determine the inverts - why they may not be significant for the inverts (maybe it wasn't measured)
 
 step.R2mod <- ordiR2step(ord.int, scope = formula(ord), selection = "forward") 
-
-ord2 <- rda(nema.means2 ~ totalN, abiotic.means2)   ###DO I EVEN NEED THIS???###
-ord2
-anova(ord2)
-plot(ord2)
 
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
 
-    ###DO I BRING IN ANOTHER DATASET OR JUST GO BASED ON THE ONES I HAVE ABOVE???###
+abiotic.mean2$Parcel <- unique(abiotic.df$Parcel)
 
-fit.weibull <- fitdist(soil.plants$Leaves, distr = "weibull")
+decomposers <- invert.mean2[,-1:-36]
+decomposers2 <- decomposers[,-8:-17]
+decomposers2$decomp <- decomposers2$Collembola + decomposers2$Diplopoda + decomposers2$Dermaptera + decomposers2$Hydrobius_fuscipes + decomposers2$Tetranichus_sp + decomposers2$Philoscia_muscorum + decomposers2$Oniscus_asellus
+
+decomposers3 <- merge(abiotic.mean2, invert.df, by = "Parcel")
+
+fit.weibull <- fitdist(decomposers2$decomp, distr = "weibull")
 fit.norm <- fitdist(soil.plants$Leaves, distr = "norm")
 fit.gamma <- fitdist(soil.plants$Leaves, distr = "gamma")
-fit.lnorm <- fitdist(soil.plants$Leaves, distr = "lnorm")               ###WHAT WOULD I ADD INTO THESE???###
-fit.nbinom <- fitdist(soil.plants$Leaves, distr = "nbinom")       ###IM SCARED :(###
+fit.lnorm <- fitdist(soil.plants$Leaves, distr = "lnorm")               
+fit.nbinom <- fitdist(soil.plants$Leaves, distr = "nbinom")       
 fit.logis <- fitdist(soil.plants$Leaves, distr = "logis")
 fit.geom <- fitdist(soil.plants$Leaves, distr = "geom")
 gofstat(list(fit.weibull, fit.norm, fit.gamma, 
              fit.lnorm, fit.nbinom, fit.logis, fit.geom))
 
-mod1 <- lm(Leaves ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP + Land_use + Species_code, data = soil.plants)
+mod1 <- lm(decomposers2 ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP + Land_use + Species_code, data = soil.plants)
 summary(mod1)   
 anova(mod1)
 AIC(mod1)
@@ -116,3 +112,7 @@ summary(mod2)$adj.r.squared
 
 #stuff <- as.data.frame(sapply(BIC, as.numeric))
 
+#mod <- lm(thing~thing2 ,data=df)
+#plot(same as above)
+
+    #go with something as long as i explain why I though it would have been explained
