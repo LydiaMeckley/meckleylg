@@ -76,13 +76,13 @@ decomposers3 <- merge(abiotic.mean2, decomposers2)
 decomposers3$decomp <- decomposers3$Collembola + decomposers3$Diplopoda + decomposers3$Dermaptera + decomposers3$Hydrobius_fuscipes + decomposers3$Tetranichus_sp + decomposers3$Philoscia_muscorum + decomposers3$Oniscus_asellus
 na.omit(decomposers3$decomp)
 
-#fit.weibull <- fitdist(decomposers2$decomp, distr = "weibull") ###
-fit.norm <- fitdist(decomposers2$decomp, distr = "norm")
-fit.gamma <- fitdist(decomposers2$decomp, distr = "gamma")
-#fit.lnorm <- fitdist(decomposers2$decomp, distr = "lnorm")  ###            
-fit.nbinom <- fitdist(decomposers2$decomp, distr = "nbinom")       
-fit.logis <- fitdist(decomposers2$decomp, distr = "logis")
-fit.geom <- fitdist(decomposers2$decomp, distr = "geom")
+#fit.weibull <- fitdist(decomposers3$decomp, distr = "weibull") ###
+fit.norm <- fitdist(decomposers3$decomp, distr = "norm")
+fit.gamma <- fitdist(decomposers3$decomp, distr = "gamma")
+#fit.lnorm <- fitdist(decomposers3$decomp, distr = "lnorm")  ###            
+fit.nbinom <- fitdist(decomposers3$decomp, distr = "nbinom")       
+fit.logis <- fitdist(decomposers3$decomp, distr = "logis")
+fit.geom <- fitdist(decomposers3$decomp, distr = "geom")
 gofstat(list(fit.norm, fit.gamma, 
             fit.nbinom, fit.logis, fit.geom))
 
@@ -107,19 +107,20 @@ mod3 <- lm(decomp ~ totalN, decomposers3)
 summary(mod3)
 anova(mod3)
 
+mod4 <- lm(decomp ~ Magnesium + Ca + Al + TotalP, data = decomposers3)
+summary(mod4)
+anova(mod4)
 
 
 
 
 
-
-
-mod6 <- lm(Leaves ~ Kalium + pH*totalN*Species_code,soil.plants)
-summary(mod6)
-anova(mod6)
-AIC(mod2,mod3,mod4,mod5,mod6)
-plot(mod6$residuals)
-summary(mod6)$adj.r.squared
+#mod6 <- lm(Leaves ~ Kalium + pH*totalN*Species_code,soil.plants)
+#summary(mod6)
+#anova(mod6)
+#AIC(mod2,mod3,mod4,mod5,mod6)
+#plot(mod6$residuals)
+#summary(mod6)$adj.r.squared
 
 
 #what was the thread between nematodes and nitrogen? PLANTS!!!
