@@ -111,8 +111,11 @@ mod4 <- lm(decomp ~ Magnesium + Ca + Al + TotalP, data = decomposers3)
 summary(mod4)
 anova(mod4)
 
-
-
+#MW attempts##
+#see what it looks like first:
+plot(decomp ~ TotalP, data = decomposers3)
+plot(decomp ~ totalN, data = decomposers3)
+plot(decomp ~ Magnesium, data = decomposers3)
 
 
 #mod6 <- lm(Leaves ~ Kalium + pH*totalN*Species_code,soil.plants)
