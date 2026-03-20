@@ -72,59 +72,61 @@ anova(step.mod)
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
 decomposers <- invert.mean2[,-1:-36]
 decomposers2 <- decomposers[,-8:-17]
-decomposers3 <- merge(abiotic.mean2, decomposers2)
-decomposers3$decomp <- decomposers3$Collembola + decomposers3$Diplopoda + decomposers3$Dermaptera + decomposers3$Hydrobius_fuscipes + decomposers3$Tetranichus_sp + decomposers3$Philoscia_muscorum + decomposers3$Oniscus_asellus
+invertdf2 <- invert.df[-9:-10,]
+
+abiotic.mean2$Parcel <- unique(abiotic.df$Parcel)
+decomposers2$Parcel <- unique(invertdf2$Parcel)
+abiotic.mean2$Parcel <- unique(abiotic.df$Parcel)
+
+decomposers2$decomp <- decomposers3$Collembola + decomposers3$Diplopoda + decomposers3$Dermaptera + decomposers3$Hydrobius_fuscipes + decomposers3$Tetranichus_sp + decomposers3$Philoscia_muscorum + decomposers3$Oniscus_asellus
 na.omit(decomposers3$decomp)
 
-#fit.weibull <- fitdist(decomposers3$decomp, distr = "weibull") ###
-fit.norm <- fitdist(decomposers3$decomp, distr = "norm")
-fit.gamma <- fitdist(decomposers3$decomp, distr = "gamma")
-#fit.lnorm <- fitdist(decomposers3$decomp, distr = "lnorm")  ###            
-fit.nbinom <- fitdist(decomposers3$decomp, distr = "nbinom")       
-fit.logis <- fitdist(decomposers3$decomp, distr = "logis")
-fit.geom <- fitdist(decomposers3$decomp, distr = "geom")
+decomposers3 <- decomposers2[,-1:-7]
+
+decomposers4 <- merge(abiotic.mean2, decomposers3, by = "Parcel")
+
+fit.norm <- fitdist(decomposers4$decomp, distr = "norm")
+fit.gamma <- fitdist(decomposers4$decomp, distr = "gamma")
+fit.nbinom <- fitdist(decomposers4$decomp, distr = "nbinom")       
+fit.logis <- fitdist(decomposers4$decomp, distr = "logis")
+fit.geom <- fitdist(decomposers4$decomp, distr = "geom")
 gofstat(list(fit.norm, fit.gamma, 
             fit.nbinom, fit.logis, fit.geom))
 
     ###LOGIS IS BEST FIT (HAS LOWEST AIC)###
 
-colnames(decomposers3)
+colnames(decomposers4)
 
-mod1 <- lm(decomp ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP, data = decomposers3)
+mod1 <- lm(decomp ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP, data = decomposers4)
 summary(mod1)   
-anova(mod1)
+anova(mod1)     #total nitrogen is significant here... just as I predicted for the decomposers...# - it is the only significant one
 AIC(mod1)
 summary(mod1)$adj.r.squared
 
-mod2 <- lm(decomp ~ pH + totalN + Kalium, decomposers3)
+mod2 <- lm(decomp ~ totalN + Kalium + Magnesium + Ca + Al + TotalP, data = decomposers4)
 summary(mod2)
-anova(mod2)
+anova(mod2)   #total nitrogen is significant here too#
 AIC(mod1,mod2)
-plot(mod2$residuals)
+plot(mod2$residuals) #looks okay
 summary(mod2)$adj.r.squared
 
-mod3 <- lm(decomp ~ totalN, decomposers3)
+mod3 <- lm(decomp ~ totalN, data = decomposers4)
 summary(mod3)
 anova(mod3)
 
-mod4 <- lm(decomp ~ Magnesium + Ca + Al + TotalP, data = decomposers3)
+mod4 <- lm(decomp ~ pH*totalN ,data = decomposers4)
 summary(mod4)
 anova(mod4)
 
-#MW attempts##
-#see what it looks like first:
-plot(decomp ~ TotalP, data = decomposers3)
-plot(decomp ~ totalN, data = decomposers3)
-plot(decomp ~ Magnesium, data = decomposers3)
+mod5 <- lm(decomp ~ totalN + Ca + TotalP, data = decomposers4)
+summary(mod5)
+anova(mod5)
 
+mod6 <- lm(decomp ~ pH*totalN*Ca*TotalP, data = decomposers4)
+summary(mod5)
+anova(mod5)
 
-#mod6 <- lm(Leaves ~ Kalium + pH*totalN*Species_code,soil.plants)
-#summary(mod6)
-#anova(mod6)
-#AIC(mod2,mod3,mod4,mod5,mod6)
-#plot(mod6$residuals)
-#summary(mod6)$adj.r.squared
-
+#it seems like Nitrogen is always significant and always the only significant one 
 
 #what was the thread between nematodes and nitrogen? PLANTS!!!
 
