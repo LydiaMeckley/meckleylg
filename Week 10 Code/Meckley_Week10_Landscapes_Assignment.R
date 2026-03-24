@@ -150,5 +150,7 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
   #Create any analysis of your choice that combines the two data sources, this can be as simple as a linear model. (5 pts)
 ###COMPARE THIS ONE WITH DB FISH###
     #OTHER DATA SET#
-
-
+LM_wd(repo="meckleylg", folder="Week 10 Code")
+data <- read.csv("Stream_Temp_Data.csv")
+temps <- data[,-1:-2]
+print(temps)
