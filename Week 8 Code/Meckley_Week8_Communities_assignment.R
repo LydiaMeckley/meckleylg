@@ -210,6 +210,7 @@ rarefaction(summed.riffles, subsample=250, plot=TRUE, color=TRUE, error=FALSE,  
 # (Q2) - Which riffle took the most effort to effectively sample? (2 pts)
     # Hint: if you use rbind() to bring your summed riffles together it will be easier to display in a single rarefaction plot.
     #The riffle that took the most effort to effectively sample was V3, or the dark blue line on the plot.
+  #That just means it had the most sampling effort used, not that it needed the most.
 
 # (Q3) - Do you think the differences between riffles are ecologically meaningful? (3 pts)
     # Hint: It might help to look at 800-individual subsamples to answer this question.
