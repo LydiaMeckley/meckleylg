@@ -142,7 +142,7 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
   #With a higher specific conductivity, there are more brown trout offspring produced, with, again, a much larger confidence interval, and the slope is less steep than that of the brook trout plot.
     #So, more brown trout offspring are produced with a higher flashiness and higher specific conductivity, and less offspring are produced with higher alkalinity, or saltiness in the water. The confidence intervals for all of these are wider than all of the brook trout ones, indicating less accuracy to the data.
 
-    ###AM I SUPPOSED TO LOOK AT JUST THE PLOTS FOR THIS ONE?
+    ###AM I SUPPOSED TO LOOK AT JUST THE PLOTS FOR THIS ONE?###
 
 #4: For your final project you'll need to find two separate data sources to combine similar to the process here.
   #In prep for that, find one data source to compare with either the data in dbfishR OR DataRetrieval. (5 pts)
@@ -152,5 +152,23 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
     #OTHER DATA SET#
 LM_wd(repo="meckleylg", folder="Week 10 Code")
 data <- read.csv("Stream_Temp_Data.csv")
-temps <- data[,-1:-2]
-print(temps)
+temps <- data[,-2]
+
+fish_flow <- merge(fish_flow_tmp, R_B_HUC, by = c("year", "site_no"))
+my.fishies <- fish_flow[,-2:-3]
+my.fishies <- my.fishies[,-3:-49]
+
+events_meta$year <-substring(as.character(events_meta$EventCode),1,4)
+year <- events_meta[,-1:-30]
+fishyear <- 
+fishies <- merge(my.fishies, temps, by.x = "year", by.y = "Winter.year")
+
+#fishie <- fishies[,-2:-4]
+
+lmodel <- lm(TotalCount ~ mean.w.T, data = fishies)
+summary(lmodel)
+anova(lmodel)
+AIC(lmodel)
+summary(lmodel)$adj.r.squared
+
+plot(TotalCount ~ mean.w.T, data = fishies)
