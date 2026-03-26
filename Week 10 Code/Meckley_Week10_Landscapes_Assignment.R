@@ -20,12 +20,10 @@ LM_wd("meckleylg")
   #change one species name at the start of the vignette
 
 #1: Give two specific conclusions you can make from these patterns. (4 pts)
-  #One specific conclusion that I can make from these patterns is that both increased stream flashiness and increased specific conductivity of the water cause more brook trout offspring to be produced. The specific conductivity one is less accurate though because of the visibly wide confidence interval compared to the stream flashiness plot.
-    #This means that brook trout prefer to have offspring in flashy streams with a lot of conductivity.
-  #A second specific conclusion I can make from these patterns is that there are less brook trout offspring produced with higher alkalinity in the water. The confidence interval is pretty wide for this one, meaning that it is not very accruate.
-    #This means that brook trout do not like to have offspring in streams that are really satly.
-
-      ###DID I INTERPRET THESE RIGHT???###
+  #One specific conclusion that I can make from these patterns is that both increased stream flashiness and increased specific conductivity of the water cause less brook trout offspring to be produced. The specific conductivity one is less accurate though because of the visibly wide confidence interval compared to the stream flashiness plot.
+    #This means that brook trout prefer to have offspring in less flashy streams with less conductivity.
+  #A second specific conclusion I can make from these patterns is that there are more brook trout offspring produced with higher alkalinity in the water. The confidence interval is pretty wide for this one, meaning that it is not very accurate.
+    #This means that brook trout like to have offspring in streams that are really salty.
 
 #2: Rerun this analysis with either (a) a different metric of brook trout populations or a different species from the database. (6 pts)
 #brown trout
@@ -137,12 +135,12 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
 
 #3: How do the results of your analysis compare to the vignette? (5 pts)
   #These results only slightly differ compared to the vignette analysis. 
-  #With a higher stream flashiness, there are more brown trout offspring produced, but the confidence interval is slightly larger than that of the brook trout's for stream flashiness, indicating that it is less accurate for the brown trout.
-  #With a higher alkalinity, there are less brown trout offspring produced, with a much larger confidence interval than that of the brook trout, indicating that, again, there is less accuracy here.
-  #With a higher specific conductivity, there are more brown trout offspring produced, with, again, a much larger confidence interval, and the slope is less steep than that of the brook trout plot.
-    #So, more brown trout offspring are produced with a higher flashiness and higher specific conductivity, and less offspring are produced with higher alkalinity, or saltiness in the water. The confidence intervals for all of these are wider than all of the brook trout ones, indicating less accuracy to the data.
-
-    ###AM I SUPPOSED TO LOOK AT JUST THE PLOTS FOR THIS ONE?###
+  #With a higher stream flashiness, there are less brown trout offspring produced, but the confidence interval is slightly larger than that of the brook trout's for stream flashiness, indicating that it is less accurate for the brown trout.
+  #With a higher alkalinity, there are more brown trout offspring produced, with a much larger confidence interval than that of the brook trout, indicating that, again, there is less accuracy here.
+  #With a higher specific conductivity, there are less brown trout offspring produced, with, again, a much larger confidence interval, and the slope is less steep than that of the brook trout plot.
+    #So, more brown trout offspring are produced with a lower flashiness and lower specific conductivity, and more offspring are produced with higher alkalinity, or saltiness in the water. The confidence intervals for all of these are wider than all of the brook trout ones, indicating less accuracy to the data.
+  #Based on the p-values for the previous plots for brook trout, all of plots were significant. The AIC lowered too when RBI, Alkalinity, and Specific Conductivity were compared.
+  #Based on the p-values for the brown trout, only the RBI was significant, Alkalinity and Specific Conductivity were not significant. The AIC also increased as the RBI, Alkalinity, and Specific conductivity were being compared.
 
 #4: For your final project you'll need to find two separate data sources to combine similar to the process here.
   #In prep for that, find one data source to compare with either the data in dbfishR OR DataRetrieval. (5 pts)
@@ -150,7 +148,7 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
   #Create any analysis of your choice that combines the two data sources, this can be as simple as a linear model. (5 pts)
 ###COMPARE THIS ONE WITH DB FISH###
     #OTHER DATA SET#
-LM_wd(repo="meckleylg", folder="Week 10 Code")
+LM_wd(repo="meckleylg", folder="Week 10 Code")  ###THIS IS NOT WORKING NOW?????###
 data <- read.csv("Stream_Temp_Data.csv")
 temps <- data[,-2]
 
