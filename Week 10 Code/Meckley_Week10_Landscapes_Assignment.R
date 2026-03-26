@@ -161,8 +161,6 @@ year <- events_meta[,-1:-30]
 fishyear <- 
 fishies <- merge(my.fishies, temps, by.x = "year", by.y = "Winter.year")
 
-#fishie <- fishies[,-2:-4]
-
 lmodel <- lm(TotalCount ~ mean.w.T, data = fishies)
 summary(lmodel)
 anova(lmodel)
