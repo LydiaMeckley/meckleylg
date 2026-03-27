@@ -72,7 +72,7 @@ ord <- rda(invert.mean2 ~., abiotic.mean2)
 ord.int <- rda(invert.mean2 ~1, abiotic.mean2)
 step.mod <- ordistep(ord.int, scope = formula(ord), selection = "both")
 anova(step.mod)
-
+#bonus point for ordistep
 # (Q2 - 12 pts) Then use the dataset from the tutorial to create a linear model related to your RDA. Try multiple predictors to find the best fit model.
   # Explain the ecological importance of the significant predictors, or lack of significant predictors.
     #There was only one significant predictor for the invertebrate community, specifically the decomposer category of invertebrates.
@@ -105,7 +105,7 @@ gofstat(list(fit.norm, fit.gamma,
             fit.nbinom, fit.logis, fit.geom))
 
     ###LOGIS IS BEST FIT (HAS LOWEST AIC)###
-
+#bonus for fitting, but didn't use the fit in the analysis after that.
 colnames(decomposers4)
 
 mod1 <- lm(decomp ~ pH + totalN + Kalium + Magnesium + Ca + Al + TotalP, data = decomposers4)
