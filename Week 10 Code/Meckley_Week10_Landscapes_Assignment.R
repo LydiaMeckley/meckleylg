@@ -21,7 +21,7 @@ LM_wd("meckleylg")
 
 #1: Give two specific conclusions you can make from these patterns. (4 pts)
   #One specific conclusion that I can make from these patterns is that both increased stream flashiness and increased specific conductivity of the water cause less brook trout offspring to be produced. The specific conductivity one is less accurate though because of the visibly wide confidence interval compared to the stream flashiness plot.
-    #This means that brook trout prefer to have offspring in less flashy streams with less conductivity.
+    #This means that brook trout prefer to have offspring in less flashy streams with less conductivity.#be careful with "prefer". You just know they were more successful.
   #A second specific conclusion I can make from these patterns is that there are more brook trout offspring produced with higher alkalinity in the water. The confidence interval is pretty wide for this one, meaning that it is not very accurate.
     #This means that brook trout like to have offspring in streams that are really salty.
 
@@ -42,7 +42,7 @@ events_meta$year <-substring(as.character(events_meta$EventCode),1,4)
 
 fish_rec <- get_fish_records()
 
-#yum brownies#
+#yum brownies# #Nice.
 brownie_count <- aggregate(ID~EventCode, data = subset(fish_rec, Species == "Brown Trout" & Pass == "Pass 1"), FUN = length)
 colnames(brownie_count)[2] <- "TotalCount"
 small_brownie_count <- aggregate(ID~EventCode, data = subset(fish_rec, Length_mm < 100 & Species == "Brown Trout" & Pass == "Pass 1"), FUN = length)
@@ -149,7 +149,7 @@ plot_smooth(gam.mod, view="SpecCond", rm.ranef=FALSE, ylab = "", xlab = "Specifi
 ###COMPARE THIS ONE WITH DB FISH###
     #OTHER DATA SET#
 LM_wd(repo="meckleylg", folder="Week 10 Code")
-data <- read.csv("Stream_Temp_Data.csv")
+data <- read.csv("Stream_Temp_Data.csv")#Where are these data from?
 temps <- data[,-2]
 
 fish_flow <- merge(fish_flow_tmp, R_B_HUC, by = c("year", "site_no"))
