@@ -1,0 +1,16 @@
+LM_wd <- function (repo, folder=NULL) {
+  if(missing(folder))
+  {
+    setwd(print(paste(if (Sys.info()[["sysname"]]=="Windows") {("C:/GitHub")} else {
+      if (Sys.info()[["sysname"]]=="Darwin"){("/Users/lydiameckley/GitHub")} else ("for Linux run: setwd('/home/[LydiaMeckley]/GitHub')")
+    },"/",repo, sep = "")))}
+  else 
+    
+  {
+    setwd(print(paste(if (Sys.info()[["sysname"]]=="Windows") {("C:/GitHub")} else {
+      if (Sys.info()[["sysname"]]=="Darwin"){("/Users/lydiameckley/GitHub")} else ("for Linux run: setwd('/home/[LydiaMeckley]/GitHub')")
+    },"/",repo, "/", folder, sep = "")))}
+}
+
+LM_wd("meckleylg")
+
