@@ -14,3 +14,8 @@ LM_wd <- function (repo, folder=NULL) {
 
 LM_wd("meckleylg")
 
+
+###In the seal one, maybe start at 2009 because both sits 'start' at 2009 
+  ###But also maybe only use the chich place because it has all the dates
+
+#What changing factors in the ocean affect the two seal populations differently.
