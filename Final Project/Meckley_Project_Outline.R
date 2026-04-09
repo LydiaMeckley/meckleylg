@@ -19,3 +19,5 @@ LM_wd("meckleylg")
   ###But also maybe only use the chich place because it has all the dates
 
 #What changing factors in the ocean affect the two seal populations differently.
+
+###DUE THURSDAY###
