@@ -68,13 +68,20 @@ seal_data <- bind_rows(harbor_list, grey_list)
   #From the seal dataset, I plan on using the "year", "count", and "species" columns. These are what is being compared with the coastal water data.
 
 # 4.
-  #The statistics that I plan on using to analyze this dataset are...
+  #The statistics that I plan on using to analyze this dataset are a linear model, ANOVA, and AIC.
+    #The linear models will be used to determine what is predicting each of the seal populations over the timeframe (1990-2018).
+    #The ANOVA will be used to determine which of the coastal water factors significantly predicts the seal populations over time.
+    #The AIC will then be used to compare accross the different models created revealing the predictors of each of the seal populations over time and to see which model is the best fit.
+    
 
 # 5. 
-  #Two figures that I think might be most useful based on the datasets I am comparing are...
+  #Two figures that I think might be most useful based on the datasets I am comparing are a linear regression and line plot.
+    #The linear regression would be used to visualize the relationship between each seal population and the coastal water factors that predict them.
+    #The line plot would be used to get a view of how the seal populations are changing over time due to the coastal water factors that predict them.
 
 # 6. 
   #The data processing methods that I will be using to bring the data into a useable format for my statistics and figures is that...
+      ###WHAT DOES THIS EVEN MEAN?????????????###
 
 
 
