@@ -32,8 +32,8 @@ LM_wd("meckleylg")
 
 ###add a region column
 
-water$side_region <- water$side
-water$side_region <- gsub(water, "South East", "SE subregion")
+#water$side_region <- water$side
+#water$side_region <- gsub(water, "South East", "SE subregion")
 #and then region 2
 
 
@@ -50,64 +50,7 @@ install.packages("rgbif")
 library(rgbif)
 library(dplyr)
 
-?rgbif
-
-# Search for the usage keys
-harbor_seal_key <- name_backbone(name='Phoca vitulina')$usageKey
-grey_seal_key <- name_backbone(name='Halichoerus grypus')$usageKey
-
-# Fetch Harbor Seals from iNaturalist in the UK
-harbor_data <- occ_search(
-  taxonKey = harbor_seal_key,
-  country = "GB",
-  datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
-  limit = 500
-)
-
-# Fetch Grey Seals from iNaturalist in the UK
-grey_data <- occ_search(
-  taxonKey = grey_seal_key,
-  country = "GB",
-  datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
-  limit = 500
-)
-
-# Extract data frames
-df_harbor <- harbor_data$data
-df_grey <- grey_data$data
-
-# Combine them
-all_seals_gbif <- bind_rows(df_harbor, df_grey)
-
-# Simple count check
-table(all_seals_gbif$scientificName)
-
-###OR TRY THIS###
-
-harbor_seal_key <- name_backbone("Phoca vitulina")$usageKey # 2433482
-grey_seal_key <- name_backbone("Halichoerus grypus")$usageKey  # 2433451
-
-get_seal_counts <- function(species_key, species_name) {
-  occ_count(
-    taxonKey = species_key,
-    country = "GB",
-    datasetKey = "50c9509d-22c7-4a22-a47d-8c48425ef4a7", # iNaturalist Dataset ID
-    year = "1990,2020",
-    facet = "year"
-  ) %>%
-    mutate(species = species_name)
-}
-
-harbor_counts <- get_seal_counts(harbor_seal_key, "Harbor Seal")
-grey_counts <- get_seal_counts(grey_seal_key, "Grey Seal")
-
-annual_data <- bind_rows(harbor_counts, grey_counts) %>%
-  rename(year = term, observations = count) %>%
-  mutate(year = as.numeric(year)) %>%
-  filter(year >= 1990 & year <= 2020)
-
-
-### OR THIS ###
+      ################THIS WORKS NOW##################
 
 # 1. Species Keys
 h_key <- name_backbone("Phoca vitulina")$usageKey
@@ -140,41 +83,7 @@ grey_list   <- lapply(years, get_yearly_data, species_key = g_key, label = "Grey
 # 5. Combine results
 seal_data <- bind_rows(harbor_list, grey_list)
 
-
-###OR
-
-# 1. Setup keys
-h_key <- 2433482
-g_key <- 2433451
-inat_dataset <- "50c9509d-22c7-4a22-a47d-8c48425ef4a7"
-years <- 2010:2020 # Start with a smaller range to test
-
-# 2. Simplified fetching function
-fetch_meta_count <- function(yr, key, label) {
-  message(paste("Fetching", label, "for year", yr))
-  
-  # occ_search with limit=0 just returns the 'meta' count
-  res <- occ_search(
-    taxonKey = key,
-    country = "GB",
-    datasetKey = inat_dataset,
-    year = yr,
-    limit = 0
-  )
-  
-  return(data.frame(year = yr, count = res$meta$count, species = label))
-}
-
-# 3. Safe execution
-# Let's try just one year first to see if it works
-test_run <- fetch_meta_count(2019, h_key, "Harbor Seal")
-print(test_run)
-
-
-###OR### - THIS WORKED, SO TRY OTHER DATASETS TOMORROW
-
-
-##############
+############## JUST INCASE I NEED THIS AS A BACKUP ##################
 
 install.packages("galah")
 library(galah)
