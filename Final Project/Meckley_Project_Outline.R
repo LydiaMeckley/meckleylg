@@ -15,8 +15,8 @@ LM_wd <- function (repo, folder=NULL) {
 LM_wd("meckleylg")
 
 # 1.
-  #What coastal seawater factors of England are capable of predicting both the harbor seal and grey seal populations over the course of 
-  #about three decades (1990-2018)?
+  #What coastal seawater factors of England (salinity, oxygen, and temperature) are capable of predicting both the harbor seal and grey seal populations over the course of 
+  #about three decades (1990-2018), and is there an interaction between year and temperature that affects either of the seal populations?
 
 # 2.
   #My first dataset, which is the coastal seawater factors, comes from Cefas, more specifically, their data portal. The CSV is given below:
@@ -81,9 +81,9 @@ seal_data <- bind_rows(harbor_list, grey_list)
     #A linear regression plot that compares the two seal populations being affected by changing salinity.
 
 # 6. 
-  #The data processing methods that I will be using to bring the data into a useable format for my statistics and figures is that:
+  #The data processing methods that I will be using to bring the data into a usable format for my statistics and figures is that:
     #First, I will change the format of the seal data so that the species of seal is shown as a column rather than both species being in one column and the counts being in another.
-    #Second, I will remove all of the colums I do not need from the coastal water dataset I have so that the ones I am actually using will be there.
+    #Second, I will remove all of the columns I do not need from the coastal water dataset I have so that the ones I am actually using will be there.
     #Third, I will get the means of the columns I am using from the coastal water dataset since there are multiple years with measurements (I only want one year with the mean/average of those measurements).
     #Fourth, I will merge my two datasets by the "year" column so that I can make my linear models comparing the species to the factors in the water.
     #Fifth, I will make my figure comparing both of the seal populations and the salinity (if it is something that is significant) to see a visual representation of the data. I will also make an ANOVA comparing all of the models I make comparing all of those water factors and compare the AICs of them.
