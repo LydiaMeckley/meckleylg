@@ -68,65 +68,27 @@ seal_data <- bind_rows(harbor_list, grey_list)
   #From the seal dataset, I plan on using the "year", "count", and "species" columns. These are what is being compared with the coastal water data.
 
 # 4.
-  #The statistics that I plan on using to analyze this dataset are a linear model, ANOVA, and AIC.
+  #The statistics that I plan on using to analyze this dataset are a linear model, GLMM, ANOVA, and AIC.
     #The linear models will be used to determine what is predicting each of the seal populations over the timeframe (1990-2018).
     #The ANOVA will be used to determine which of the coastal water factors significantly predicts the seal populations over time.
-    #The AIC will then be used to compare accross the different models created revealing the predictors of each of the seal populations over time and to see which model is the best fit.
-    
+    #The GLMM will be used to make the interaction between temperature and year on both of the seal populations.
+    #Another ANOVA will be used to see the interaction of temperature and year on both of the seal populations.
+    #The AIC will then be used to compare across the different models created revealing the predictors of each of the seal populations over time and to see which model is the best fit.
 
 # 5. 
-  #Two figures that I think might be most useful based on the datasets I am comparing are a linear regression and line plot.
-    #The linear regression would be used to visualize the relationship between each seal population and the coastal water factors that predict them.
-    #The line plot would be used to get a view of how the seal populations are changing over time due to the coastal water factors that predict them.
+  #Two figures that I think might be most useful based on the datasets I am comparing are:
+    #A plot that shows the interaction between year and temperature for both the harbor and grey seal populations. This would be a figure that has two plots in it.
+    #A linear regression plot that compares the two seal populations being affected by changing salinity.
 
 # 6. 
-  #The data processing methods that I will be using to bring the data into a useable format for my statistics and figures is that...
-      ###WHAT DOES THIS EVEN MEAN?????????????###
+  #The data processing methods that I will be using to bring the data into a useable format for my statistics and figures is that:
+    #First, I will change the format of the seal data so that the species of seal is shown as a column rather than both species being in one column and the counts being in another.
+    #Second, I will remove all of the colums I do not need from the coastal water dataset I have so that the ones I am actually using will be there.
+    #Third, I will get the means of the columns I am using from the coastal water dataset since there are multiple years with measurements (I only want one year with the mean/average of those measurements).
+    #Fourth, I will merge my two datasets by the "year" column so that I can make my linear models comparing the species to the factors in the water.
+    #Fifth, I will make my figure comparing both of the seal populations and the salinity (if it is something that is significant) to see a visual representation of the data. I will also make an ANOVA comparing all of the models I make comparing all of those water factors and compare the AICs of them.
+    #Sixth, I will make a GLMM to look at the interactive effect between the temperature and year to see how that affects both of the seal populations. The data would be considered random so I would use a GLMM rather than a GLM.
+    #Seventh, I will make the plot (two plots as one figure), with one that is comparing both of the seal populations with the temperature, and then the other with year.
+    
 
 
-
-
-
-###DUE THURSDAY###
-
-#add a region column
-#water$side_region <- water$side
-#water$side_region <- gsub(water, "South East", "SE subregion")
-#and then region 2
-
-############## JUST INCASE I NEED THIS AS A BACKUP ##################
-
-install.packages("galah")
-library(galah)
-
-# 1. Config
-galah_config(atlas = "United Kingdom")
-
-# 2. Get counts for Harbor Seals
-harbor_counts <- galah_call() %>%
-  galah_filter(
-    scientificName == "Phoca vitulina",
-    year >= 1990, 
-    year <= 2018
-  ) %>%
-  galah_group_by(year) %>%
-  atlas_counts() %>%
-  mutate(species = "Harbor Seal")
-
-# 3. Get counts for Grey Seals
-grey_counts <- galah_call() %>%
-  galah_filter(
-    scientificName == "Halichoerus grypus",
-    year >= 1990, 
-    year <= 2018
-  ) %>%
-  galah_group_by(year) %>%
-  atlas_counts() %>%
-  mutate(species = "Grey Seal")
-
-# 4. Combine
-all_seals <- bind_rows(harbor_counts, grey_counts)
-print(all_seals)
-
-
-#just england bc we have england and all of its regions and such and other countries...
