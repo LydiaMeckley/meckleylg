@@ -39,7 +39,7 @@ g_key <- name_backbone("Halichoerus grypus")$usageKey
 inat_dataset <- "50c9509d-22c7-4a22-a47d-8c48425ef4a7"
 
 # 2. Define the years we want
-years <- 1990:2018
+years <- 2007:2018
 
 # 3. Create a helper function to fetch one year at a time
 get_yearly_data <- function(yr, species_key, label) {
@@ -78,9 +78,24 @@ waterdata <- waterdata[,-6]
 waterdata <- subset(waterdata, Country == "England")
 
 ###MEAN THE COASTAL WATER DATA BY YEAR###
-water.means <- aggregate(x = waterdata, by = list(abiotic$names), FUN = "mean")
+waterdata <- na.omit(waterdata)
+waterdata$Year <- paste(waterdata$Year)
+water.means <- aggregate(x = waterdata, by = list(waterdata$Year), FUN = "mean")
+
+###REMOVE NAs FROM THE COASTAL WATER DATA###
+water.means <- water.means[,-2:-3]
+
+###CHANGE THE COLUMN NAME OF THE YEAR COLUMN BACK TO "YEAR"###
+colnames(water.means)[1] <- "Year"
+
+  ###HAS TO BE 2007 BECAUSE 2006 HAS LOTS OF NAS
 
 ###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA)###
-merge(x, y, by.x = "Year", by.y = "year")
+seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
+
+      ###ASK IF I AM DOING THIS RIGHT SO FAR###
 
 
+mod1 <- lm(count ~ Oxygen + Salinity + Temp, data = seal.water) ###WOW, NONE ARE SIGNIFICANT... :C HOPEFULLY THAT IS OKAY 
+summary(mod1) ###WHEN I TRIED TO DO SPECIES IT DID NOT WORK, THE SPECIES I THINK NEED TO BE SEPARATED...
+anova(mod1)
