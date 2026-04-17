@@ -88,14 +88,12 @@ water.means <- water.means[,-2:-3]
 ###CHANGE THE COLUMN NAME OF THE YEAR COLUMN BACK TO "YEAR"###
 colnames(water.means)[1] <- "Year"
 
-  ###HAS TO BE 2007 BECAUSE 2006 HAS LOTS OF NAS
-
 ###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA)###
 seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
 
-      ###ASK IF I AM DOING THIS RIGHT SO FAR###
+      
 
 
-mod1 <- lm(count ~ Oxygen + Salinity + Temp, data = seal.water) ###WOW, NONE ARE SIGNIFICANT... :C HOPEFULLY THAT IS OKAY 
+mod1 <- lm(count ~ Oxygen + Salinity + Temp, data = seal.water)
 summary(mod1) ###WHEN I TRIED TO DO SPECIES IT DID NOT WORK, THE SPECIES I THINK NEED TO BE SEPARATED...
 anova(mod1)
