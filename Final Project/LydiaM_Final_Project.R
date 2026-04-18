@@ -97,3 +97,4 @@ seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
 mod1 <- lm(count ~ Oxygen + Salinity + Temp, data = seal.water)
 summary(mod1) ###WHEN I TRIED TO DO SPECIES IT DID NOT WORK, THE SPECIES I THINK NEED TO BE SEPARATED...
 anova(mod1)
+            ###Also it is not significant, is that okay? :C
