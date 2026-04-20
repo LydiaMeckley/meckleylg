@@ -91,10 +91,11 @@ colnames(water.means)[1] <- "Year"
 ###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA)###
 seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
 
-      
+###MAKE THE SEALS AS A FACTOR###
+seal.water$species <- as.factor(seal.water$species)
+    ###THIS DOESN'T WORK :CCC ASK - it is bc the seal NAMES are not associated with the numbers for some reason
 
-
-mod1 <- lm(count ~ Oxygen + Salinity + Temp, data = seal.water)
-summary(mod1) ###WHEN I TRIED TO DO SPECIES IT DID NOT WORK, THE SPECIES I THINK NEED TO BE SEPARATED...
+mod1 <- lm(species ~ Oxygen + Salinity + Temp, data = seal.water)
+summary(mod1)
 anova(mod1)
             ###Also it is not significant, is that okay? :C
