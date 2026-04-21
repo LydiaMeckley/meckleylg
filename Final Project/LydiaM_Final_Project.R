@@ -15,7 +15,7 @@ LM_wd <- function (repo, folder=NULL) {
 LM_wd("meckleylg")
 
 
-###Final project due: Thursday April 30th at 8:00am###
+###Final project due: Thursday April 30th at 10:00am###
 
 
 
@@ -26,6 +26,9 @@ library(readxl)
 library(vegan)
 library(fitdistrplus)
 library(logspline)
+library(MASS)
+library(MuMIn)
+library(mgcv)
 
 ###DATASETS###
   #COASTAL WATER DATA#
@@ -65,7 +68,7 @@ grey_list   <- lapply(years, get_yearly_data, species_key = g_key, label = "Grey
 sealdata <- bind_rows(harbor_list, grey_list)
 
 
-                    #####CLEANING UP THE DATA#####
+                    #####PART 1 -LINEAR MODEL AND SCATTER PLOT#####
 
 
 ###REMOVE COLUMNS I DO NOT NEED FROM THE COASTAL WATER DATASET###
@@ -91,11 +94,60 @@ colnames(water.means)[1] <- "Year"
 ###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA)###
 seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
 
-###MAKE THE SEALS AS A FACTOR###
-seal.water$species <- as.factor(seal.water$species)
-    ###THIS DOESN'T WORK :CCC ASK - it is bc the seal NAMES are not associated with the numbers for some reason
+###SEE WHAT DISTRIBUTION BEST FITS THE SEAL COUNTS###
+fit.weibull <- fitdist(seal.water$count, distr = "weibull")
+fit.norm <- fitdist(seal.water$count, distr = "norm")
+fit.gamma <- fitdist(seal.water$count, distr = "gamma")
+fit.lnorm <- fitdist(seal.water$count, distr = "lnorm")
+fit.nbinom <- fitdist(seal.water$count, distr = "nbinom")
+fit.logis <- fitdist(seal.water$count, distr = "logis")
+fit.geom <- fitdist(seal.water$count, distr = "geom")
+gofstat(list(fit.weibull, fit.norm, fit.gamma, 
+             fit.lnorm, fit.nbinom, fit.logis, fit.geom))
+  #lnorm is the best fit, it has the lowest AIC of all the distributions (205.25)
 
-mod1 <- lm(species ~ Oxygen + Salinity + Temp, data = seal.water)
+###CREATE A LINEAR MODEL TO SEE WHAT BEST EXPLAINS BOTH OF THE SEAL POPULATIONS###
+mod1 <- lm(count ~ Oxygen + species, family = lnorm, data = seal.water)
 summary(mod1)
 anova(mod1)
-            ###Also it is not significant, is that okay? :C
+AIC(mod1)
+
+mod2 <- lm(count ~ Salinity + species, family = lnorm, data = seal.water)
+summary(mod2)
+anova(mod2)
+AIC(mod2)
+
+mod3 <- lm(count ~ Temp + species, family = lnorm, data = seal.water)
+summary(mod3)
+anova(mod3)
+AIC(mod3)
+#intercept is the other factor (grey seals)
+#salinity predicts both of the seal counts best, even if it is far from being significant based on the AICs
+
+###FIGURE 1###
+plot(seal.water$count ~ seal.water$Salinity, xlab = "Salinity (PSU)", ylab = "Seal Population Counts", pch=16, col = "navyblue")
+abline(lm(seal.water$count ~ seal.water$Salinity), col = "black")
+#make it look a little prettier (aka the bottom)
+  #should I be getting a summary or ANOVA for this? :O
+
+
+                    #####PART 2 - GLMM AND PLOT OF SORTS#####
+
+###CREATE A GLMM WITH AN INTERACTIVE EFFECT BETWEEN TEMPERATURE AND YEAR TO SEE HOW IT PREDICTS EACH OF THE SEAL SPECIES###
+glmm.mod <- glmmPQL(count ~ Temp * Year, family = gaussian, random = ~ 1 | species, data = seal.water)
+summary(glmm.mod)
+
+#i want to do one GLMM for each species
+#something is going wrong here... :(
+
+###I HAVE TRIED 50 MILLION DISTRIBUTIONS AND NONE WORK
+
+###climate variability - standard deviation with climate (what can I do with that? ask wednesday! maybe that can be my third plot)
+
+
+
+
+
+
+
+
