@@ -168,7 +168,7 @@ plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "T
 ###climate variability - standard deviation with climate (what can I do with that? ask Thursday! maybe that can be my third plot)
   #what can I do with it
 
-
+###climate variability and oxygen (and relate that to the seals conceptually)
 
 
 
