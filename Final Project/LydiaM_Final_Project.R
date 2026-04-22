@@ -29,6 +29,7 @@ library(logspline)
 library(MASS)
 library(MuMIn)
 library(mgcv)
+library(itsadug)
 
 ###DATASETS###
   #COASTAL WATER DATA#
@@ -68,7 +69,7 @@ grey_list   <- lapply(years, get_yearly_data, species_key = g_key, label = "Grey
 sealdata <- bind_rows(harbor_list, grey_list)
 
 
-                    #####PART 1 -LINEAR MODEL AND SCATTER PLOT#####
+                    ####PART 1 - LINEAR MODEL AND SCATTER PLOT####
 
 
 ###REMOVE COLUMNS I DO NOT NEED FROM THE COASTAL WATER DATASET###
@@ -128,73 +129,43 @@ AIC(mod3)
 plot(seal.water$count ~ seal.water$Salinity, xlab = "Salinity (PSU)", ylab = "Seal Population Counts", pch=16, col = "navyblue")
 abline(lm(seal.water$count ~ seal.water$Salinity), col = "black")
 #make it look a little prettier (aka the bottom)
-  #should I be getting a summary or ANOVA for this? :O
+  #should I be getting a summary or ANOVA for this? :O probsablies
 
 
-                    #####PART 2 - GLMM AND PLOT OF SORTS#####
-
-###CREATE A GLMM WITH AN INTERACTIVE EFFECT BETWEEN TEMPERATURE AND YEAR TO SEE HOW IT PREDICTS EACH OF THE SEAL SPECIES###
-glmm.mod <- glmmPQL(count ~ Temp * Year, family = gaussian, random = ~ 1 | species, data = seal.water)
-summary(glmm.mod)
-
-#i want to do one GLMM for each species
-#something is going wrong here... :(
-###I HAVE TRIED 50 MILLION DISTRIBUTIONS AND NONE WORK
-#is it something to do with it being year and it is trying to multiply it???
-        ###Im gonna have to get this AND a plot done for it Wednesday
+                    ####PART 2 - GAM AND INTERACTION PLOT####
 
 
-###what to say: So I tried many times with the GLMM and it kept giving me errors, I then went back and fourth with AI and came to the
-#conclusion that It will not work mainly because I have two species and that is not enough to be considered "random" so I will use
-#a gam mod instead and now I am not sure how I can go about doing that for an interactive effect on the seals (I want to see how
-#it interacts with each seal species). ALSOOOOO how do I make the plot you showed me would be cool to do? (in photos)
+###CHANGE THE YEAR TO NUMERIC SO IT IS COMPATIBLE WITH THE GAM###
+seal.water$Year <- as.numeric(seal.water$Year)
 
-
+###CREATE A GAM WITH AN INTERACTIVE EFFECT BETWEEN TEMPERATURE AND YEAR TO SEE HOW IT PREDICTS EACH OF THE SEAL SPECIES###
+  ###THIS IS THE GLOBAL MODEL###
 gam.mod <- gam(count~Temp*Year+species, data = seal.water)
 summary(gam.mod)
-###IS THIS HOW TO DO THE GAMMOD? how do I read this?
+
+###SUBSET EACH SEAL SPECIES TO MAKE AN INDIVIDUAL GAM FOR THEM###
+harbor.seal <- subset(seal.water, species == "Harbor Seal")
+grey.seal <- subset(seal.water, species == "Grey Seal")
+
+###CREATE INDIVIDUAL GAMS FOR EACH SEAL SPECIES TO COMPARE IN THE PLOTS###
+gam.mod2 <- gam(count~Temp*Year, data = harbor.seal)
+gam.mod3 <- gam(count~Temp*Year, data = grey.seal)
+summary(gam.mod2)
+summary(gam.mod3)
+
+###PLOT FOR THE GAM TO VISUALIZE THE INTERACTIVE EFFECT OF TEMPERATURE AND YEAR ON BOTH SEAL SPECIES###
+par(mfrow = c(2, 2))
+plot_smooth(gam.mod2, view="Year", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Year")
+plot_smooth(gam.mod2, view="Temp", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Temperature (C°)")
+
+plot_smooth(gam.mod3, view="Year", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Year")
+plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Temperature (C°)")
 
 
+                    ####PART 3 - CLIMATE VARIABILITY####
 
 
-
-
-#plot for the stinky glmm (or gam...)
-par(mfrow = c(1, 2))
-      #okay yeah so how do I do this???
-
-
-
-
-
-
-
-###TRYING SOMETHING WITH GOOGLE AI###
-seal.water$Year <- as.numeric(as.character(seal.water$Year))
-
-seal.water$Temp_s <- scale(seal.water$Temp)
-seal.water$Year_s <- scale(seal.water$Year)
-
-# Run your original code with the new variables
-glmm.mod <- glmmPQL(count ~ Temp_s * Year_s + species, family = gaussian, random = ~ 1 | species, data = seal.water)
-summary(glmm.mod)
-#and when I do this, it gives me NAs for species
-# Model for Grey Seals only
-grey_mod <- lm(count ~ Temp_s * Year_s, data = subset(seal.water, species == "Grey Seal"))
-summary(grey_mod)
-
-# Model for Harbor Seals only
-harbor_mod <- lm(count ~ Temp_s * Year_s, data = subset(seal.water, species == "Harbor Seal"))
-summary(harbor_mod)
-#OOOOO this works...
-
-
-#However, since you only have two species, the model cannot mathematically estimate a "distribution" of 
-#species. It's like trying to find the average height of a crowd when you only have two people—the math doesn't work.
-    ##It tells me this so... I do not have enough species for it to be considered a random effect
-
-
-###climate variability - standard deviation with climate (what can I do with that? ask wednesday! maybe that can be my third plot)
+###climate variability - standard deviation with climate (what can I do with that? ask Thursday! maybe that can be my third plot)
   #what can I do with it
 
 
@@ -209,6 +180,7 @@ summary(harbor_mod)
 
 #trying climate variability 
 # This creates a new data frame with Year and its Standard Deviation
+
 temp_sd <- aggregate(Temp ~ Year, data = waterdata, FUN = sd)
 
 # Rename the column for clarity
