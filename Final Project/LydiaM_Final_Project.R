@@ -128,8 +128,7 @@ AIC(mod3)
 ###FIGURE 1###
 plot(seal.water$count ~ seal.water$Salinity, xlab = "Salinity (PSU)", ylab = "Seal Population Counts", pch=16, col = "navyblue")
 abline(lm(seal.water$count ~ seal.water$Salinity), col = "black")
-#make it look a little prettier (aka the bottom)
-  #should I be getting a summary or ANOVA for this? :O probsablies
+                  ####make it look a little prettier (aka the bottom)
 
 
                     ####PART 2 - GAM AND INTERACTION PLOT####
@@ -153,6 +152,7 @@ gam.mod3 <- gam(count~Temp*Year, data = grey.seal)
 summary(gam.mod2)
 summary(gam.mod3)
 
+###FIGURE 2###
 ###PLOT FOR THE GAM TO VISUALIZE THE INTERACTIVE EFFECT OF TEMPERATURE AND YEAR ON BOTH SEAL SPECIES###
 par(mfrow = c(2, 2))
 plot_smooth(gam.mod2, view="Year", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Year")
@@ -165,10 +165,35 @@ plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "T
                     ####PART 3 - CLIMATE VARIABILITY####
 
 
-###climate variability - standard deviation with climate (what can I do with that? ask Thursday! maybe that can be my third plot)
-  #what can I do with it
+###TAKE THE STANDARD DEVIATION OF BOTH OXYGEN AND YEAR TO MEASURE CLIMATE VARIABILITY###
+sdtemp <- aggregate(Temp ~ Year, data = waterdata, FUN = sd)
+sdoxygen <- aggregate(Oxygen ~ Year, data = waterdata, FUN = sd)
 
-###climate variability and oxygen (and relate that to the seals conceptually)
+###MERGE THE TWO STANDARD DEVIATION DATAFRAMES FOR EASIER COMPARISON IN THE LINEAR MODEL###
+climate <- merge(sdtemp, sdoxygen, by = "Year")
+
+###CHANGE YEAR TO BE NUMERIC SO IT IS COMPATIBLE WITH THE LINEAR MODEL###
+climate$Year <- as.numeric(climate$Year)
+
+###LINEAR MODEL FOR CLIMATE VARIATION BETWEEN TEMPERATURE STANDARD DEVIATION AND YEAR WITH OXYGEN AS A COVARIATE###
+mod4 <- lm(Temp ~ Year + Oxygen, data = climate)
+summary(mod4)
+ANOVA(mod4)
+
+###FIGURE 3###
+###PLOT OF THE RELATIONSHIP BETWEEN TEMPERATURE STANDARD DEVIATION AND YEAR FOR CLIMATE VARIABILITY###
+plot(climate$Temp ~ climate$Year, xlab = "Year", ylab = "SD Temperature (C°)", pch=16, col = "navyblue")
+abline(lm(climate$Temp ~ climate$Year), col = "black")
+
+#this could relate back to my seals over years!
+  #I have to explain what is significant about this when I do my results and discussion
+  #needs to be conceptually related to my seals
+
+
+
+
+###should my figures and the figure captions go into the word doc with the results and discussion?
+###HOW CAN I PRETTY UP MY PLOTS???
 
 
 
@@ -178,15 +203,17 @@ plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "T
 
 
 
-#trying climate variability 
-# This creates a new data frame with Year and its Standard Deviation
 
-temp_sd <- aggregate(Temp ~ Year, data = waterdata, FUN = sd)
 
-# Rename the column for clarity
-colnames(temp_sd)[2] <- "Temp_Variability"
+###cool! - should I use this too?
+plot(climate$Temp ~ climate$Oxygen, xlab = "SD Oxygen", ylab = "SD Temperature (C°)", pch=16, col = "navyblue")
 
-print(temp_sd)
+
+
+
+
+
+#A significant covariate means that knowing the value of that variable helps you better predict the dependent variable ($Y$). Even if the effect size is small, the model is "sure" that the direction of the effect (positive or negative) is real within your population.
 
 
 
