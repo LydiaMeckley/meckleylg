@@ -128,7 +128,6 @@ AIC(mod3)
 ###FIGURE 1###
 plot(seal.water$count ~ seal.water$Salinity, xlab = "Salinity (PSU)", ylab = "Seal Population Counts", pch=16, col = "navyblue")
 abline(lm(seal.water$count ~ seal.water$Salinity), col = "black")
-                  ####make it look a little prettier (aka the bottom)
 
 
                     ####PART 2 - GAM AND INTERACTION PLOT####
@@ -141,6 +140,7 @@ seal.water$Year <- as.numeric(seal.water$Year)
   ###THIS IS THE GLOBAL MODEL###
 gam.mod <- gam(count~Temp*Year+species, data = seal.water)
 summary(gam.mod)
+anova(gam.mod)
 
 ###SUBSET EACH SEAL SPECIES TO MAKE AN INDIVIDUAL GAM FOR THEM###
 harbor.seal <- subset(seal.water, species == "Harbor Seal")
@@ -151,15 +151,17 @@ gam.mod2 <- gam(count~Temp*Year, data = harbor.seal)
 gam.mod3 <- gam(count~Temp*Year, data = grey.seal)
 summary(gam.mod2)
 summary(gam.mod3)
+anova(gam.mod2)
+anova(gam.mod3)
 
 ###FIGURE 2###
 ###PLOT FOR THE GAM TO VISUALIZE THE INTERACTIVE EFFECT OF TEMPERATURE AND YEAR ON BOTH SEAL SPECIES###
 par(mfrow = c(2, 2))
-plot_smooth(gam.mod2, view="Year", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Year")
-plot_smooth(gam.mod2, view="Temp", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Temperature (C°)")
+plot_smooth(gam.mod2, view="Year", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Year", hide.label = TRUE)
+plot_smooth(gam.mod2, view="Temp", rm.ranef=FALSE, ylab = "Harbor Seal", xlab = "Temperature (C°)", hide.label = TRUE)
 
-plot_smooth(gam.mod3, view="Year", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Year")
-plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Temperature (C°)")
+plot_smooth(gam.mod3, view="Year", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Year", hide.label = TRUE)
+plot_smooth(gam.mod3, view="Temp", rm.ranef=FALSE, ylab = "Grey Seal", xlab = "Temperature (C°)", hide.label = TRUE)
 
 
                     ####PART 3 - CLIMATE VARIABILITY####
@@ -178,7 +180,7 @@ climate$Year <- as.numeric(climate$Year)
 ###LINEAR MODEL FOR CLIMATE VARIATION BETWEEN TEMPERATURE STANDARD DEVIATION AND YEAR WITH OXYGEN AS A COVARIATE###
 mod4 <- lm(Temp ~ Year + Oxygen, data = climate)
 summary(mod4)
-ANOVA(mod4)
+anova(mod4)
 
 ###FIGURE 3###
 ###PLOT OF THE RELATIONSHIP BETWEEN TEMPERATURE STANDARD DEVIATION AND YEAR FOR CLIMATE VARIABILITY###
@@ -188,27 +190,6 @@ abline(lm(climate$Temp ~ climate$Year), col = "black")
 #this could relate back to my seals over years!
   #I have to explain what is significant about this when I do my results and discussion
   #needs to be conceptually related to my seals
-
-
-
-
-###should my figures and the figure captions go into the word doc with the results and discussion?
-###HOW CAN I PRETTY UP MY PLOTS???
-
-
-
-
-
-
-
-
-
-
-
-###cool! - should I use this too?
-plot(climate$Temp ~ climate$Oxygen, xlab = "SD Oxygen", ylab = "SD Temperature (C°)", pch=16, col = "navyblue")
-
-
 
 
 
