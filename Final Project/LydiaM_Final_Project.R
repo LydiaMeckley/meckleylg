@@ -187,16 +187,4 @@ anova(mod4)
 plot(climate$Temp ~ climate$Year, xlab = "Year", ylab = "SD Temperature (C°)", pch=16, col = "navyblue")
 abline(lm(climate$Temp ~ climate$Year), col = "black")
 
-#this could relate back to my seals over years!
-  #I have to explain what is significant about this when I do my results and discussion
-  #needs to be conceptually related to my seals
-
-
-
-
-#A significant covariate means that knowing the value of that variable helps you better predict the dependent variable ($Y$). Even if the effect size is small, the model is "sure" that the direction of the effect (positive or negative) is real within your population.
-
-
-
-
 
