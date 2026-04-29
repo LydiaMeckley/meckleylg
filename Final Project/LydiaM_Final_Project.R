@@ -72,7 +72,7 @@ sealdata <- bind_rows(harbor_list, grey_list)
                     ####PART 1 - LINEAR MODEL AND SCATTER PLOT####
 
 
-###REMOVE COLUMNS I DO NOT NEED FROM THE COASTAL WATER DATASET###
+###REMOVE COLUMNS I DO NOT NEED FROM THE COASTAL WATER DATASET FOR BETTER ORGANIZATION###
 waterdata <- waterdata[,-1]
 waterdata <- waterdata[,-2:-6]
 waterdata <- waterdata[,-3:-7]
@@ -81,21 +81,21 @@ waterdata <- waterdata[,-6]
 ###SUBSET THE COASTAL WATER DATA TO ONLY HAVE DATA FROM THE COUNTRY "ENGLAND"###
 waterdata <- subset(waterdata, Country == "England")
 
-###MEAN THE COASTAL WATER DATA BY YEAR###
+###MEAN THE COASTAL WATER DATA BY YEAR BECAUSE THERE ARE NUMEROUS VALUES FOR EACH VARIABLE I WANT TO USE###
 waterdata <- na.omit(waterdata)
 waterdata$Year <- paste(waterdata$Year)
 water.means <- aggregate(x = waterdata, by = list(waterdata$Year), FUN = "mean")
 
-###REMOVE NAs FROM THE COASTAL WATER DATA###
+###REMOVE NAs FROM THE COASTAL WATER DATA SO THAT I CAN MERGE WITHOUT ERROR###
 water.means <- water.means[,-2:-3]
 
-###CHANGE THE COLUMN NAME OF THE YEAR COLUMN BACK TO "YEAR"###
+###CHANGE THE COLUMN NAME OF THE YEAR COLUMN BACK TO "YEAR" FOR BETTER ORGANIZATION###
 colnames(water.means)[1] <- "Year"
 
-###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA)###
+###MERGE BOTH OF THE DATASETS (COSTAL WATER DATA AND SEAL POPULATION DATA) FOR COMPARISON###
 seal.water <- merge(water.means, sealdata, by.x = "Year", by.y = "year")
 
-###SEE WHAT DISTRIBUTION BEST FITS THE SEAL COUNTS###
+###SEE WHAT DISTRIBUTION BEST FITS THE SEAL COUNTS FOR A MORE ACCURATE LINEAR MODEL###
 fit.weibull <- fitdist(seal.water$count, distr = "weibull")
 fit.norm <- fitdist(seal.water$count, distr = "norm")
 fit.gamma <- fitdist(seal.water$count, distr = "gamma")
@@ -122,8 +122,8 @@ mod3 <- lm(count ~ Temp + species, family = lnorm, data = seal.water)
 summary(mod3)
 anova(mod3)
 AIC(mod3)
-#intercept is the other factor (grey seals)
 #salinity predicts both of the seal counts best, even if it is far from being significant based on the AICs
+#summary and ANOVa used to extract results, and this holds true for all of the other sections in the script that have ANOVAs and summaries
 
 ###FIGURE 1###
 plot(seal.water$count ~ seal.water$Salinity, xlab = "Salinity (PSU)", ylab = "Seal Population Counts", pch=16, col = "navyblue")
@@ -137,7 +137,7 @@ abline(lm(seal.water$count ~ seal.water$Salinity), col = "black")
 seal.water$Year <- as.numeric(seal.water$Year)
 
 ###CREATE A GAM WITH AN INTERACTIVE EFFECT BETWEEN TEMPERATURE AND YEAR TO SEE HOW IT PREDICTS EACH OF THE SEAL SPECIES###
-  ###THIS IS THE GLOBAL MODEL###
+  ###THIS IS THE GLOBAL MODEL TO SEE AN OVERALL COMPARISON AND INTERACTION###
 gam.mod <- gam(count~Temp*Year+species, data = seal.water)
 summary(gam.mod)
 anova(gam.mod)
