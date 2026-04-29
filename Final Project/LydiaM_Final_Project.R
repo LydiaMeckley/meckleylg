@@ -14,11 +14,6 @@ LM_wd <- function (repo, folder=NULL) {
 
 LM_wd("meckleylg")
 
-
-###Final project due: Thursday April 30th at 10:00am###
-
-
-
 ###PACKAGES###
 library(rgbif)
 library(dplyr)
