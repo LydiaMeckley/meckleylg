@@ -103,7 +103,7 @@ gofstat(list(fit.weibull, fit.norm, fit.gamma,
   #lnorm is the best fit, it has the lowest AIC of all the distributions (205.25)
 
 ###CREATE A LINEAR MODEL TO SEE WHAT BEST EXPLAINS BOTH OF THE SEAL POPULATIONS###
-mod1 <- lm(count ~ Oxygen + species, family = lnorm, data = seal.water)
+mod1 <- lm(count ~ Oxygen + species, family = lnorm, data = seal.water)#"lnorm" isn't the family name in the argument
 summary(mod1)
 anova(mod1)
 AIC(mod1)
@@ -133,7 +133,7 @@ seal.water$Year <- as.numeric(seal.water$Year)
 
 ###CREATE A GAM WITH AN INTERACTIVE EFFECT BETWEEN TEMPERATURE AND YEAR TO SEE HOW IT PREDICTS EACH OF THE SEAL SPECIES###
   ###THIS IS THE GLOBAL MODEL TO SEE AN OVERALL COMPARISON AND INTERACTION###
-gam.mod <- gam(count~Temp*Year+species, data = seal.water)
+gam.mod <- gam(count~Temp*Year+species, data = seal.water)#Strictly speaking a GAM requires a random effect, smoother, and/or nonnormal family.
 summary(gam.mod)
 anova(gam.mod)
 
